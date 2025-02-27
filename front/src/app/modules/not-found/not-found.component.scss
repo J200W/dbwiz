@@ -1,0 +1,72 @@
+$main-color: #8C52FF;
+$main-color-2: #a476ff;
+$second-color: #CB6CE6;
+$third-color: #ffdd54;
+$black-color: #1A1A1A;
+$black-gray-color: #3e3e3e;
+$black-pink-color: #45244d;
+$white-color: #F6F6F6;
+$white-pink-color: #fbf1ff;
+$gray-color: #B3B3B3;
+
+#not-found-container {
+    background-color: #f7dcff;
+    opacity: 1;
+    background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #f7dcff 40px), repeating-linear-gradient(#ffffff55, #ffffff);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 95vh;
+    width: 100%;
+
+    h1 {
+        font-size: 4.5rem;
+        font-family: Arimo, sans-serif;
+        font-weight: 700;
+        color: $black-pink-color;
+        margin-top: 20px;
+        text-align: center;
+        padding: 0 20px;
+
+    }
+
+    h2 {
+        font-size: 2.3rem;
+        font-family: Arimo, sans-serif;
+        font-weight: 700;
+        color: $black-color;
+        margin-top: 20px;
+        text-align: center;
+        padding: 0 20px;
+        max-width: 900px;
+    }
+
+    p {
+        font-size: 1.5rem;
+        font-family: Arimo, sans-serif;
+        font-weight: 400;
+        color: $black-color;
+        margin-top: 20px;
+        text-align: center;
+        padding: 0 20px;
+    }
+
+    a {
+        font-family: Arimo, sans-serif;
+        font-weight: 700;
+        color: $main-color;
+        text-decoration: none;
+        margin-top: 20px;
+        padding: 1rem 2rem;
+        background: linear-gradient(113deg, $white-pink-color, $white-color);
+        border-radius: 10px;
+        box-shadow: 0px 4px 15px rgba(140, 82, 255, 0.3);
+        transition: all 0.5s ease;
+    }
+
+    a:hover {
+        background: linear-gradient(113deg, $main-color, $main-color-2);
+        color: $white-color;
+    }
+}

@@ -1,0 +1,64 @@
+$main-color: #8C52FF;
+$second-color: #CB6CE6;
+$third-color: #F1C40F;
+$black-color: #1A1A1A;
+$white-color: #F6F6F6;
+$white-pink-color: #fbf1ff;
+$gray-color: #B3B3B3;
+
+.scrolled {
+    background-color: $white-color;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+header {
+    width: 100%;
+    padding-block: 10px;
+    background-color: transparent;
+    position: fixed;
+    z-index: 1000;
+    transition: all 0.2s;
+
+    #header-container {
+        width: 90%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-content: center;
+
+        #logo {
+            width: 100%;
+            img {
+                max-height: 50px;
+                height: 100%;
+                width: auto;
+            }
+        }
+
+        nav {
+            margin: auto;
+            width: 100%;
+            ul {
+                display: flex;
+                justify-content: flex-end;
+                flex-direction: row;
+
+                gap: 20px;
+                li {
+                    a {
+                        font-family: Arimo, sans-serif;
+                        color: $main-color;
+                        font-size: 1rem;
+                        border-bottom: 1px solid $main-color;
+                        font-weight: 500;
+                        transition: all 0.3s;
+                        &:hover {
+                            color: $third-color;
+                            border-bottom: 1px solid $third-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

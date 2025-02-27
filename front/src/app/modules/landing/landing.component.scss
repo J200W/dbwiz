@@ -1,0 +1,204 @@
+$main-color: #8C52FF;
+$main-color-2: #a476ff;
+$second-color: #CB6CE6;
+$third-color: #ffdd54;
+$black-color: #1A1A1A;
+$black-gray-color: #3e3e3e;
+$black-pink-color: #45244d;
+$white-color: #F6F6F6;
+$FFF: #FFFFFF;
+$white-pink-color: #fbf1ff;
+$gray-color: #B3B3B3;
+
+
+#landing-header {
+    background-color: #f7dcff;
+    opacity: 1;
+    background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #f7dcff 40px), repeating-linear-gradient(#ffffff55, #ffffff);
+    min-height: 600px;
+    height: 100%;
+    padding-top: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    @media screen and (max-width: 768px) {
+        padding-top: 120px;
+        padding-bottom: 50px;
+    }
+
+    #logo-landing {
+        max-height: 60px;
+        height: 100%;
+        width: auto;
+    }
+
+    h2 {
+        font-size: 2.3rem;
+        font-family: Arimo, sans-serif;
+        font-weight: 700;
+        color: $black-pink-color;
+        margin-top: 20px;
+        text-align: center;
+        padding: 0 20px;
+    }
+
+    #landing-buttons {
+        margin: 90px auto 0;
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+
+        @media screen and (max-width: 768px) {
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 20px;
+        }
+
+        a {
+            width: 100%;
+            padding: 1.5rem 2rem;
+            background: linear-gradient(113deg, $white-pink-color, $white-color);
+            border-radius: 10px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+            border: 1px solid $FFF;
+            box-sizing: border-box;
+            font-family: Arimo, sans-serif;
+            transition: all 0.3s;
+
+            h3 {
+                color: $main-color;
+                font-size: 1.5rem;
+                font-weight: 800;
+                margin-bottom: 10px;
+            }
+
+            p {
+                color: $black-color;
+                font-size: 1rem;
+                font-weight: 400;
+                line-height: 26px;
+            }
+        }
+
+        a:hover {
+            transform: scale(0.95);
+        }
+    }
+}
+
+#about {
+    scroll-margin-top: 70px;
+}
+
+section {
+    padding-block: 50px;
+    font-family: Arimo, sans-serif;
+
+    @media screen and (max-width: 768px) {
+        padding-top: 30px;
+    }
+
+    hr {
+        width: 80%;
+        margin: 0 auto;
+        border: 0.5px solid $black-gray-color;
+
+        @media screen and (max-width: 768px) {
+            width: 90%;
+        }
+    }
+
+    #what {
+        width: 80%;
+        margin: 50px auto;
+        margin-bottom: 100px;
+        @media screen and (max-width: 768px) {
+            width: 90%;
+        }
+
+        h2 {
+            color: $black-pink-color;
+            font-size: 2.5rem;
+            font-weight: 700;
+            width: 100%;
+            text-align: left;
+        }
+
+        p {
+            color: $black-color;
+            margin-top: 20px;
+            line-height: 26px;
+        }
+    }
+
+    #why {
+        width: 80%;
+        margin: 100px auto;
+        @media screen and (max-width: 768px) {
+            width: 90%;
+        }
+
+        h2 {
+            color: $black-pink-color;
+            font-size: 2.5rem;
+            font-weight: 700;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        #why-list {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(2, 1fr);
+
+            @media screen and (max-width: 768px) {
+                grid-template-columns: repeat(1, 1fr);
+            }
+
+            .why-item {
+                width: 100%;
+                background: linear-gradient(113deg, $main-color-2, $second-color);
+                padding: 30px;
+                box-sizing: border-box;
+                border-radius: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+
+                .why-item-title {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 20px;
+                    width: 100%;
+
+                    img {
+                        max-height: 40px;
+                        height: auto;
+                        margin-bottom: 20px;
+                        filter: invert(77%) sepia(61%) saturate(1233%) hue-rotate(359deg) brightness(102%) contrast(94%);
+                    }
+
+                    h3 {
+                        color: $white-color;
+                        font-size: 1.5rem;
+                        font-weight: 800;
+                        margin-bottom: 20px;
+                    }
+                }
+
+                p {
+                    color: $white-color;
+                }
+            }
+
+        }
+
+    }
+
+}

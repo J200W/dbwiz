@@ -4,8 +4,9 @@
 
 export const environment = {
     production: false,
-    apiBackendBaseUrl: 'http://localhost:{YOUR-BACKEND-LOCAL-IP}',
-    apiKeyDbWiz: "YOUR-DEEPSEEK-API-KEY"
+    apiBackendBaseUrl: 'http://localhost:8080',
+    apiKeyDeepSeek: "sk-4e96de2f7c6a459a93cb37148779504f",
+    apiKeyChatGpt: ""
 };
 
 /*
