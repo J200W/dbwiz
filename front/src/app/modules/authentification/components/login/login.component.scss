@@ -1,0 +1,228 @@
+$main-color: #8C52FF;
+$main-color-2: #a476ff;
+$black-color: #3b3b3b;
+$black-gray-color: #3e3e3e;
+$black-pink-color: #45244d;
+$white-color: #F6F6F6;
+$white-gray-color: #e6e6e6;
+$FFF: #FFFFFF;
+$gray-color: #B3B3B3;
+$error-color: #ff224d;
+
+#auth-container {
+    width: 100%;
+
+    #auth-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 93vh;
+        width: 90%;
+        max-width: 350px;
+        margin: 0 auto;
+        font-family: Arimo, sans-serif;
+
+        @media screen and (max-width: 768px) {
+            max-width: unset;
+        }
+
+        img {
+            width: auto;
+            height: 120px;
+        }
+
+        p {
+            margin-block: 20px;
+            font-size: 1rem;
+            color: $black-gray-color;
+            text-align: center;
+        }
+
+        form {
+            padding-bottom: 20px;
+
+            .form-group {
+                mat-label {
+                    font-size: 1rem;
+                    font-weight: 500;
+                    padding-left: 10px;
+                    color: $gray-color;
+                }
+
+                mat-form-field {
+                    width: 100%;
+                    margin-bottom: 20px;
+
+                    .mat-form-field-appearance-outline .mat-form-field-outline {
+                        color: white;
+                    }
+
+                    input {
+                        padding-left: 10px;
+                        font-size: 1.1rem;
+                    }
+
+                    .mat-icon {
+                        color: $gray-color;
+                    }
+
+                    #password-toggle {
+                        cursor: pointer;
+                    }
+
+                    mat-error {
+                        font-size: 0.8rem;
+                        color: $error-color;
+                    }
+                }
+
+                mat-checkbox {
+                    color: $black-color;
+                    font-size: 0.8rem;
+                    margin-top: -20px;
+                    line-height: 20px;
+
+                    a {
+                        color: $main-color;
+                        text-decoration: none;
+                    }
+                }
+
+                button {
+                    width: 100%;
+                    margin-top: 20px;
+                    padding: 10px;
+                    font-size: 1rem;
+                    font-weight: 500;
+                    background-color: $main-color;
+                    color: $FFF;
+                    border: none;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    transition: 0.3s;
+
+                    &:hover {
+                        background-color: $main-color-2;
+                    }
+
+                    &:disabled {
+                        background-color: $gray-color;
+                        cursor: not-allowed;
+                    }
+                }
+
+                #auth-links {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+                    margin-top: 20px;
+                    font-size: 0.9rem;
+                    color: $black-gray-color;
+
+                    a {
+                        color: $main-color;
+                        text-decoration: none;
+                    }
+                }
+
+                #auth-separator {
+                    font-size: 1em;
+                    font-family: Arimo,sans-serif;
+                    color: $gray-color;
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    width: 100%;
+                    margin: 30px auto;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    &::before {
+                        content: "";
+                        flex: 1;
+                        height: 1px;
+                        background-color: $gray-color;
+                        display: block;
+                        position: relative;
+                        margin-right: 1rem;
+                    }
+
+                    &::after {
+                        content: "";
+                        flex: 1;
+                        height: 1px;
+                        background-color: $gray-color;
+                        display: block;
+                        position: relative;
+                        margin-left: 1rem;
+                    }
+                }
+
+                #google-login {
+                    background-color: $FFF;
+                    color: $black-color;
+                    border: 1px solid $gray-color;
+                    border-radius: 10px;
+                    padding: 10px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    cursor: pointer;
+                    transition: 0.3s;
+
+                    img {
+                        width: 18px;
+                        height: 18px;
+                        margin-right: 10px;
+                    }
+
+                    &:hover {
+                        background-color: $white-gray-color;
+
+                        img {
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+}
+
+:host ::ng-deep .mdc-checkbox__background {
+    border-radius: 5px !important;
+    border: 1px solid $black-pink-color !important;
+}
+
+:host ::ng-deep .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
+    background-color: $main-color !important;
+}
+
+:host ::ng-deep .mdc-checkbox__native-control ~ .mdc-checkbox__background > .mdc-checkbox__checkmark {
+    color: white;
+    height: 10px;
+    width: 10px;
+    margin: 3px;
+}
+
+:host ::ng-deep .mdc-floating-label--required:not(.mdc-floating-label--hide-required-marker)::after {
+    color: $error-color;
+}
+
+:host ::ng-deep .mdc-text-field--outlined {
+    --mdc-outlined-text-field-container-shape: 10px;
+}
+
+::ng-deep .mdc-notched-outline__leading {
+    border-color: $gray-color !important;
+}
+
+::ng-deep .mdc-notched-outline__notch {
+    border-color: $gray-color !important;
+}
+
+::ng-deep .mdc-notched-outline__trailing {
+    border-color: $gray-color !important;
+}

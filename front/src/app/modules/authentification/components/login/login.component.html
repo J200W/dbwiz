@@ -1,9 +1,46 @@
 <div id="auth-container">
-    <img alt="" src="/assets/dbwiz-logo-long.png" srcset="">
-    <p>Connectez-vous via email ou Google.</p>
-    <form [formGroup]="loginForm">
-        <div class="form-group">
-
-        </div>
-    </form>
+    <div id="auth-div">
+        <a href="/" id="auth-logo">
+            <img alt="" src="/assets/dbwiz-logo-long.png">
+        </a>
+        <p>Connectez-vous par email ou via Google.</p>
+        <form [formGroup]="loginForm">
+            <div class="form-group">
+                <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Email</mat-label>
+                    <input formControlName="email" matInput required>
+                    <mat-icon matSuffix>email</mat-icon>
+                    @if (loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched) {
+                        <mat-error>Veuillez entrer une adresse email valide.</mat-error>
+                    }
+                    @if (loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
+                        <mat-error>Ce champ est requis.</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Mot de passe</mat-label>
+                    <input formControlName="password" matInput required [type]="visible ? 'text' : 'password'">
+                    <mat-icon (click)="toggleVisible()" matSuffix id="password-toggle">
+                        {{ visible ? 'visibility' : 'visibility_off' }}
+                    </mat-icon>
+                </mat-form-field>
+                <mat-checkbox formControlName="consent" required>
+                    Je confirme avoir lu et accepté les <a href="/terms">conditions d'utilisation</a> et la
+                    <a href="/policy">politique de confidentialité</a> de DB Wiz.
+                </mat-checkbox>
+                <button type="submit" value="Se connecter" [disabled]="loginForm.invalid">
+                    Se connecter
+                </button>
+                <div id="auth-links">
+                    <a href="/password-reset">Mot de passe oublié ?</a>
+                    <a href="/register">Créez un compte</a>
+                </div>
+                <p id="auth-separator">ou</p>
+                <button id="google-login" type="button" (click)="googleLogin()">
+                    <img alt="Google" src="/assets/svg/google.svg">
+                    Se connecter avec Google
+                </button>
+            </div>
+        </form>
+    </div>
 </div>

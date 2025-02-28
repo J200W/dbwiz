@@ -1,4 +1,4 @@
-<header [ngClass]="{'scrolled': hasScrolled}">
+<header [ngClass]="{'scrolled': hasScrolled}" *ngIf="!show">
     <div id="header-container">
         <div id="logo">
             <a href="/">

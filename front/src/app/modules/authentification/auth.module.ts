@@ -11,13 +11,15 @@ import {MatIconModule} from '@angular/material/icon';
 import {RegisterComponent} from "./components/register/register.component";
 import {LoginComponent} from "./components/login/login.component";
 import {RouterModule} from "@angular/router";
+import {MatCheckbox, MatCheckboxModule} from "@angular/material/checkbox";
 
 const materialModules = [
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+    MatCheckboxModule
 ]
 
 @NgModule({

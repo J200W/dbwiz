@@ -1,22 +1,30 @@
-import {Component} from '@angular/core';
-import {NgClass} from "@angular/common";
+import {Component, OnInit, Input} from '@angular/core';
+import {NgClass, NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     imports: [
-        NgClass
+        NgClass,
+        NgIf
     ],
     styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
-    hasScrolled = false;
+export class HeaderComponent implements OnInit {
+    @Input() show: boolean | undefined;
+    public hasScrolled = false;
+
 
     onScroll() {
         this.hasScrolled = window.scrollY > 30;
     }
 
-    constructor() {
+    constructor(
+    ) {
         window.addEventListener('scroll', this.onScroll.bind(this));
+    }
+
+    ngOnInit() {
+        console.log(this.show);
     }
 }

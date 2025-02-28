@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
 import {StrongPasswordRegx} from "../../../../core/constants/strong-password-regx";
+import {EmailRegx} from "../../../../core/constants/email-regx";
 
 @Component({
     selector: 'app-login',
@@ -13,6 +14,7 @@ import {StrongPasswordRegx} from "../../../../core/constants/strong-password-reg
 export class LoginComponent {
 
     public loginForm!: FormGroup;
+    public visible: boolean = false;
 
     constructor(
         private authService: AuthService,
@@ -22,10 +24,18 @@ export class LoginComponent {
 
     ) {
         this.loginForm = this.formBuilder.group({
-            email: ['', [Validators.required, Validators.email]],
-            username: ['', [Validators.required, Validators.min(3)]],
-            password: ['', [Validators.required, Validators.pattern(StrongPasswordRegx)]],
+            email: ['', [Validators.required, Validators.email, Validators.pattern(EmailRegx)]],
+            password: ['', [Validators.required]],
+            consent: [false, [Validators.requiredTrue]]
         });
+    }
+
+    public toggleVisible(): void {
+        this.visible = !this.visible;
+    }
+
+    public googleLogin(): void {
+        return;
     }
 
 }
