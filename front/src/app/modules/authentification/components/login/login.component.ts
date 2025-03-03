@@ -2,13 +2,12 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
-import {StrongPasswordRegx} from "../../../../core/constants/strong-password-regx";
 import {EmailRegx} from "../../../../core/constants/email-regx";
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrl: './login.component.scss',
+    styleUrl: './../authentification.common.scss',
     standalone: false
 })
 export class LoginComponent {
@@ -36,6 +35,13 @@ export class LoginComponent {
 
     public googleLogin(): void {
         return;
+    }
+
+    get email() {
+        return this.loginForm.get('email');
+    }
+    get password() {
+        return this.loginForm.get('password');
     }
 
 }

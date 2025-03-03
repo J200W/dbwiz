@@ -1,1 +1,64 @@
-<p>register works!</p>
+<div id="auth-container">
+    <div id="auth-div">
+        <a href="/" id="auth-logo">
+            <img alt="" src="/assets/dbwiz-logo-long.png">
+        </a>
+        <p>Créez votre compte uniquement à l'aide de votre email.</p>
+        <form [formGroup]="registerForm">
+            <div class="form-group">
+                <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Email</mat-label>
+                    <input formControlName="email" matInput required>
+                    <mat-icon matSuffix>email</mat-icon>
+                    @if (email?.errors?.['email'] && email?.touched) {
+                        <mat-error>Veuillez entrer une adresse email valide.</mat-error>
+                    }
+                    @if (email?.errors?.['required'] && email?.touched) {
+                        <mat-error>Ce champ est requis.</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Mot de passe</mat-label>
+                    <input formControlName="password" matInput required [type]="visible ? 'text' : 'password'">
+                    <mat-icon (click)="toggleVisible()" matSuffix class="password-toggle">
+                        {{ visible ? 'visibility' : 'visibility_off' }}
+                    </mat-icon>
+                    @if (password?.errors?.['required'] && password?.touched) {
+                        <mat-error>Ce champ est requis.</mat-error>
+                    }
+                    @if (password?.errors?.['minlength'] && password?.touched) {
+                        <mat-error>Veuillez entrer un mot de passe d'au moins 8 caractères.</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Mot de passe confirmé</mat-label>
+                    <input formControlName="confirmPassword" matInput required [type]="visibleConfirm ? 'text' : 'password'">
+                    <mat-icon (click)="toggleVisibleConfirm()" matSuffix class="password-toggle">
+                        {{ visibleConfirm ? 'visibility' : 'visibility_off' }}
+                    </mat-icon>
+                    @if (confirmPassword?.errors?.['required'] && confirmPassword?.touched) {
+                        <mat-error>Ce champ est requis.</mat-error>
+                    }
+                    @if (confirmPassword?.errors?.['minlength'] && confirmPassword?.touched) {
+                        <mat-error>Veuillez entrer un mot de passe d'au moins 8 caractères.</mat-error>
+                    }
+                    @if (confirmPassword?.errors?.['passwordMismatch'])
+                    {
+                        <mat-error>Les mots de passe ne correspondent pas.</mat-error>
+                    }
+                </mat-form-field>
+                <mat-checkbox formControlName="consent" required id="consent-register">
+                    Je confirme avoir lu et accepté les <a href="/terms-of-use">conditions d'utilisation</a> et la
+                    <a href="/privacy-policy">politique de confidentialité</a> de DB Wiz.
+                </mat-checkbox>
+                <button type="submit" value="Se connecter" [disabled]="registerForm.invalid">
+                    S'inscrire
+                </button>
+                <div id="auth-links">
+                    <a href="/auth/password-reset">Mot de passe oublié ?</a>
+                    <a href="/auth/login">Se connecter</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -11,7 +11,7 @@ import {User} from "../../../core/models/user.interface";
     providedIn: 'root',
 })
 export class AuthService {
-    /**
+    /**@
      * Chemin vers le service
      * @type {string}
      * @memberof AuthService

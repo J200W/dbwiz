@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AuthRoutes} from './auth.routes';
+import {DatabaseRoutes} from './database.routes';
 
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -8,11 +8,10 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
-import {RegisterComponent} from "./components/register/register.component";
-import {LoginComponent} from "./components/login/login.component";
 import {RouterModule} from "@angular/router";
-import {MatCheckbox, MatCheckboxModule} from "@angular/material/checkbox";
-import {PasswordResetComponent} from "./components/password-reset/password-reset.component";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {GenerateDatabaseComponent} from "./components/generate-database/generate-database.component";
+import {BuildDatabaseComponent} from "./components/build-database/build-database.component";
 
 const materialModules = [
     MatButtonModule,
@@ -25,9 +24,8 @@ const materialModules = [
 
 @NgModule({
     declarations: [
-        LoginComponent,
-        RegisterComponent,
-        PasswordResetComponent
+        BuildDatabaseComponent,
+        GenerateDatabaseComponent
     ],
     imports: [
         CommonModule,
@@ -35,13 +33,12 @@ const materialModules = [
         ReactiveFormsModule,
         ...materialModules,
         RouterModule,
-        AuthRoutes,
+        DatabaseRoutes,
     ],
     exports: [
-        LoginComponent,
-        RegisterComponent,
-        PasswordResetComponent
+        BuildDatabaseComponent,
+        GenerateDatabaseComponent
     ]
 })
-export class AuthModule {
+export class DatabaseModule {
 }

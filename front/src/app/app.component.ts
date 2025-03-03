@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.isAuthPage = window.location.pathname.includes('auth');
+        this.isAuthPage =
+            window.location.pathname.includes('auth')
     }
 }

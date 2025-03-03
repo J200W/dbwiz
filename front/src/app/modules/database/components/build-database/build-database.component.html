@@ -1,0 +1,26 @@
+<div id="build-container">
+    <div class="build-step">
+        <form [formGroup]="buildForm">
+            @if (currentStep === 1) {
+                <div class="form-group">
+                    <h2>1ère étape : Le contexte</h2>
+                    <mat-form-field appearance="outline" class="example-full-width">
+                        <mat-label>Quel est le but de votre base de données ?</mat-label>
+                        <textarea formControlName="description" matInput required rows="5"></textarea>
+                    </mat-form-field>
+                    <button mat-raised-button color="primary" (click)="nextStep()">Suivant</button>
+                </div>
+            }
+            @if (currentStep === 2) {
+<!--                <div class="form-group">-->
+<!--                    <h2>2ème étape : Les entités</h2>-->
+<!--                    <mat-form-field appearance="outline" class="example-full-width">-->
+<!--                        <mat-label>Quelles sont les entités de votre base de données ?</mat-label>-->
+<!--                        <textarea formControlName="entities" matInput required rows="5"></textarea>-->
+<!--                    </mat-form-field>-->
+<!--                    <button mat-raised-button color="primary" (click)="nextStep()">Suivant</button>-->
+<!--                </div>-->
+            }
+        </form>
+    </div>
+</div>
