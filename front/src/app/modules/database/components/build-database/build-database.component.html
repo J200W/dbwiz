@@ -3,23 +3,71 @@
         <form [formGroup]="buildForm">
             @if (currentStep === 1) {
                 <div class="form-group">
-                    <h2>1ère étape : Le contexte</h2>
+                    <h2>1<sup>ère</sup> étape : Le contexte</h2>
+                    <p>Quel est le but de votre base de données (pour un site web, une application, etc.) ?<br>Donnez-nous
+                        une description de votre futur projet.</p>
                     <mat-form-field appearance="outline" class="example-full-width">
-                        <mat-label>Quel est le but de votre base de données ?</mat-label>
-                        <textarea formControlName="description" matInput required rows="5"></textarea>
+                        <textarea placeholder="Votre projet..." formControlName="description" matInput required rows="5"></textarea>
                     </mat-form-field>
-                    <button mat-raised-button color="primary" (click)="nextStep()">Suivant</button>
+                    <div class="step-buttons">
+                        <button mat-raised-button color="primary" (click)="nextStep()" [disabled]="!description.valid">
+                            Suivant
+                            <mat-icon matSuffix class="password-toggle">
+                                navigate_next
+                            </mat-icon>
+                        </button>
+                    </div>
                 </div>
             }
             @if (currentStep === 2) {
-<!--                <div class="form-group">-->
-<!--                    <h2>2ème étape : Les entités</h2>-->
-<!--                    <mat-form-field appearance="outline" class="example-full-width">-->
-<!--                        <mat-label>Quelles sont les entités de votre base de données ?</mat-label>-->
-<!--                        <textarea formControlName="entities" matInput required rows="5"></textarea>-->
-<!--                    </mat-form-field>-->
-<!--                    <button mat-raised-button color="primary" (click)="nextStep()">Suivant</button>-->
-<!--                </div>-->
+                <div class="form-group">
+                    <h2>2<sup>ème</sup> étape : Les contraintes</h2>
+                    <p>Quelles sont les contraintes de votre base de données (nombre de tables et/ou de colonnes,
+                        performance de la base de données, etc.) ?</p>
+                    <mat-form-field appearance="outline" class="example-full-width">
+                        <textarea placeholder="Mes contraintes..." formControlName="contrainte" matInput required rows="5"></textarea>
+                    </mat-form-field>
+                    <div class="step-buttons">
+                        <button mat-raised-button color="primary" (click)="previousStep()">
+                            Précédent
+                            <mat-icon matSuffix class="password-toggle">
+                                navigate_before
+                            </mat-icon>
+                        </button>
+                        <button class="prev-btn" mat-raised-button color="primary" (click)="nextStep()"
+                                [disabled]="!contrainte.valid">
+                            Suivant
+                            <mat-icon matSuffix class="password-toggle">
+                                navigate_next
+                            </mat-icon>
+                        </button>
+                    </div>
+                </div>
+            }
+            @if (currentStep === 3) {
+                <div class="form-group">
+                    <h2>3<sup>ème</sup> étape : Le langage</h2>
+                    <p>Quel langage de base de données souhaitez-vous utiliser ?</p>
+                    <select formControlName="langage" required (change)="onLangageChange($event)">
+                        <option value="" disabled selected>Choisissez un langage</option>
+                        <option *ngFor="let langage of langages" [value]="langage">{{ langage }}</option>
+                    </select>
+                    <div class="step-buttons">
+                        <button mat-raised-button color="primary" (click)="previousStep()">
+                            Précédent
+                            <mat-icon matSuffix class="password-toggle">
+                                navigate_before
+                            </mat-icon>
+                        </button>
+                        <button class="prev-btn" mat-raised-button color="primary" (click)="nextStep()"
+                                [disabled]="!contrainte.valid">
+                            Suivant
+                            <mat-icon matSuffix class="password-toggle">
+                                navigate_next
+                            </mat-icon>
+                        </button>
+                    </div>
+                </div>
             }
         </form>
     </div>

@@ -1,6 +1,7 @@
-*{
+* {
     scroll-behavior: smooth;
 }
+
 /* You can add global styles to this file, and also import other style files */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -22,36 +23,60 @@ time, mark, audio, video {
     font: inherit;
     vertical-align: baseline;
 }
+
 a {
     text-decoration: none;
     color: inherit;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
     display: block;
 }
+
 body {
     line-height: 1;
 }
+
 ol, ul {
     list-style: none;
 }
+
 blockquote, q {
     quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
     content: '';
     content: none;
 }
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
 button {
     background-color: transparent;
     border: none;
     outline: none;
     cursor: pointer;
+}
+
+sup {
+    vertical-align: super; /* Positions the text as superscript */
+}
+
+.mat-mdc-form-field-type-mat-native-select .mat-mdc-form-field-infix::after {
+    margin-right: 20px !important;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 5px 20px;
+    box-sizing: border-box;
 }

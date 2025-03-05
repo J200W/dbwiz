@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {trigger} from "@angular/animations";
 
 @Component({
     selector: 'app-build-database',
@@ -11,6 +12,7 @@ import {Router} from "@angular/router";
 export class BuildDatabaseComponent implements OnInit, OnDestroy {
     public buildForm!: FormGroup;
     private step: number = 1;
+    public langages: string[] = ['MySQL', 'PostgreSQL', 'SQLite', 'Oracle', 'SQL Server'];
 
     constructor(
         private formBuilder: FormBuilder,
@@ -18,7 +20,8 @@ export class BuildDatabaseComponent implements OnInit, OnDestroy {
     ) {
         this.buildForm = this.formBuilder.group({
             description: ['', Validators.required],
-            contraintes: [''],
+            contrainte: [''],
+            langage: ['', Validators.required],
         });
     }
 
@@ -38,5 +41,22 @@ export class BuildDatabaseComponent implements OnInit, OnDestroy {
 
     get currentStep(): number {
         return this.step;
+    }
+
+    get description(): AbstractControl {
+        return this.buildForm.get('description')!;
+    }
+
+    get contrainte(): AbstractControl {
+        return this.buildForm.get('contrainte')!;
+    }
+
+    get langage(): AbstractControl {
+        return this.buildForm.get('langage')!;
+    }
+
+    public onLangageChange(event: any): void {
+        this.langage.setValue(event.target.value);
+        console.log(this.langage.value)
     }
 }

@@ -123,13 +123,19 @@ section {
             font-size: 2.5rem;
             font-weight: 700;
             width: 100%;
-            text-align: left;
+            text-align: center;
         }
 
         p {
             color: $black-color;
             margin-top: 20px;
             line-height: 26px;
+            font-size: 1.1rem;
+            text-align: center;
+
+            @media screen and (max-width: 768px) {
+                font-size: 1rem;
+            }
         }
     }
 
@@ -145,7 +151,7 @@ section {
             font-size: 2.5rem;
             font-weight: 700;
             width: 100%;
-            text-align: left;
+            text-align: center;
             margin-bottom: 30px;
         }
 
@@ -194,6 +200,11 @@ section {
 
                 p {
                     color: $white-color;
+                    font-size: 1.1rem;
+
+                    @media screen and (max-width: 768px) {
+                        font-size: 1rem;
+                    }
                 }
             }
 
