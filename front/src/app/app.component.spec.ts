@@ -14,16 +14,17 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'db-wiz' title`, () => {
+  it(`should have the 'dbwiz' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('db-wiz');
+    // @ts-ignore
+    expect(app.title).toEqual('dbwiz');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, db-wiz');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, dbwiz');
   });
 });

@@ -5,6 +5,7 @@ import com.j200w.dbwiz.exception.ResourceNotFoundException;
 import com.j200w.dbwiz.model.ERole;
 import com.j200w.dbwiz.model.Role;
 import com.j200w.dbwiz.model.User;
+import com.j200w.dbwiz.payload.request.LoginRequest;
 import com.j200w.dbwiz.payload.request.RegisterRequest;
 import com.j200w.dbwiz.payload.response.AuthResponse;
 import com.j200w.dbwiz.security.jwt.JwtUtils;
@@ -21,18 +22,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
+
 @RestController
 @RequestMapping("/api/auth")
 @AllArgsConstructor
@@ -62,12 +61,12 @@ public class AuthController {
     /**
      * Enregistrer un utilisateur
      *
-     * @param signUpRequest
-     * @param response
-     * @return
+     * @param signUpRequest RegisterRequest
+     * @param response HttpServletResponse
+     * @return AuthResponse
      */
-    @RequestMapping("/signup")
-    public AuthResponse signup(
+    @PostMapping("/register")
+    public AuthResponse register(
             @Valid @RequestBody RegisterRequest signUpRequest,
             HttpServletResponse response
     ) {
@@ -139,5 +138,54 @@ public class AuthController {
         } catch (Exception e) {
             throw new RuntimeException("Erreur: Erreur rencontrée lors de l'enregistrement de l'utilisateur --> " + e.getMessage());
         }
+    }
+
+    /**
+     * Authentifier un utilisateur
+     *
+     * @param loginRequest RegisterRequest
+     * @param response HttpServletResponse
+     * @return AuthResponse
+     */
+    @PostMapping("/login")
+    public AuthResponse login(
+            @Valid @RequestBody LoginRequest loginRequest,
+            HttpServletResponse response
+    ) {
+        try {
+            // Authentification de l'utilisateur avec l'email et le mot de passe
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+
+            // Mettre l'authentification dans le contexte de sécurité de Spring
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = jwtUtils.generateJwtToken(authentication);
+
+            // Créer un cookie HttpOnly contenant le JWT
+            response.addCookie(authService.createCookie(jwtTokenName, jwt, 24 * 60 * 60));
+
+            // Récupérer les détails de l'utilisateur authentifié
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+            // Retourner un message de succès
+            return new AuthResponse(
+                    userDetails.getUsername(),
+                    userDetails.getEmail(),
+                    userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()),
+                    HttpStatus.OK.value());
+
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur: Erreur rencontrée lors de l'authentification de l'utilisateur --> " + e.getMessage());
+        }
+    }
+
+    /**
+     * Enregistrer un utilisateur avec Google
+     *
+     * @return AuthResponse
+     */
+    @RequestMapping("/signup")
+    public AuthResponse signupGoogle() {
+        return null;
     }
 }

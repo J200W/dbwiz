@@ -19,11 +19,9 @@ public class User {
     private Integer id;
 
     @Column(name = "firstname")
-    @NonNull
     private String firstName;
 
     @Column(name = "lastname")
-    @NonNull
     private String lastName;
 
     @Column(name = "email")
@@ -39,4 +37,15 @@ public class User {
     @Builder.Default
     private Set<Role> role = new HashSet<>();
 
+    public User(
+            String firstName,
+            String lastName,
+            String email,
+            String password
+    ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
 }

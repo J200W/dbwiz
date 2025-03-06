@@ -4,6 +4,9 @@ import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {MaterialModule} from "./material.module";
 import {SharedModule} from "../shared/shared.module";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {JwtInterceptor} from "./interceptors/jwt.interceptor";
+import {CookieService} from "ngx-cookie-service";
 
 @NgModule({
     declarations: [],
@@ -14,6 +17,11 @@ import {SharedModule} from "../shared/shared.module";
         MaterialModule
     ],
     providers: [
+        {
+            provide: HTTP_INTERCEPTORS, useClass:
+            JwtInterceptor, multi: true
+        },
+        CookieService
     ],
     exports: [
         MaterialModule

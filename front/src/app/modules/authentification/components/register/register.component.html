@@ -51,7 +51,7 @@
                     Je confirme avoir lu et accepté les <a href="/terms-of-use">conditions d'utilisation</a> et la
                     <a href="/privacy-policy">politique de confidentialité</a> de DB Wiz.
                 </mat-checkbox>
-                <button type="submit" value="Se connecter" [disabled]="registerForm.invalid">
+                <button type="submit" value="Se connecter" [disabled]="registerForm.invalid" (click)="register()">
                     S'inscrire
                 </button>
                 <div id="auth-links">

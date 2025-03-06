@@ -40,8 +40,22 @@ export class LoginComponent {
     get email() {
         return this.loginForm.get('email');
     }
+
     get password() {
         return this.loginForm.get('password');
     }
 
+    public login(): void {
+        if (this.loginForm.valid) {
+            this.authService.login(this.loginForm.value).subscribe({
+                next: (response) => {
+                    console.log(response);
+                    this.router.navigate(['/']);
+                },
+                error: (error) => {
+                    console.error(error);
+                }
+            });
+        }
+    }
 }
