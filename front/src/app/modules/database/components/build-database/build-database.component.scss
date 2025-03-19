@@ -75,6 +75,7 @@ $FFF: #FFFFFF;
                     padding: 5px 20px;
                     box-sizing: border-box;
                     --placeHolder-color: #959595;
+                    line-height: 30px;
 
                     &::placeholder {
                         color: var(--placeHolder-color);

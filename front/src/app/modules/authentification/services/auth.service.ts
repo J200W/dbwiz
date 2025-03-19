@@ -91,6 +91,6 @@ export class AuthService {
      * @public
      */
     public isLogged(): Observable<boolean> {
-        return this.httpClient.get<boolean>(`${this.pathService}/is-logged`);
+        return this.httpClient.get<boolean>(`${this.pathService}/is-logged-in`);
     }
 }

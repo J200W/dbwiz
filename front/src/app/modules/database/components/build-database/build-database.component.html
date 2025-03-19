@@ -1,4 +1,4 @@
-<div id="build-container">
+<section id="build-container">
     <div class="build-step">
         <form [formGroup]="buildForm">
             @if (currentStep === 1) {
@@ -10,7 +10,7 @@
                         <textarea placeholder="Votre projet..." formControlName="description" matInput required rows="5"></textarea>
                     </mat-form-field>
                     <div class="step-buttons">
-                        <button mat-raised-button color="primary" (click)="nextStep()" [disabled]="!description.valid">
+                        <button class="next-btn" mat-raised-button color="primary" (click)="nextStep()" [disabled]="!description.valid">
                             Suivant
                             <mat-icon matSuffix class="password-toggle">
                                 navigate_next
@@ -34,7 +34,7 @@
                                 navigate_before
                             </mat-icon>
                         </button>
-                        <button class="prev-btn" mat-raised-button color="primary" (click)="nextStep()"
+                        <button class="next-btn" mat-raised-button color="primary" (click)="nextStep()"
                                 [disabled]="!contrainte.valid">
                             Suivant
                             <mat-icon matSuffix class="password-toggle">
@@ -59,11 +59,11 @@
                                 navigate_before
                             </mat-icon>
                         </button>
-                        <button class="prev-btn" mat-raised-button color="primary" (click)="nextStep()"
+                        <button class="next-btn" mat-raised-button color="primary" (click)="generate()"
                                 [disabled]="!contrainte.valid">
-                            Suivant
+                            Générer
                             <mat-icon matSuffix class="password-toggle">
-                                navigate_next
+                                check
                             </mat-icon>
                         </button>
                     </div>
@@ -71,4 +71,4 @@
             }
         </form>
     </div>
-</div>
+</section>

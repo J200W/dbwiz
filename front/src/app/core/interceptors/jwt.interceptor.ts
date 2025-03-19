@@ -9,7 +9,7 @@ import { Observable } from "rxjs";
  * @implements {HttpInterceptor}
  */
 export class JwtInterceptor implements HttpInterceptor {
-    public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         req = req.clone({
             withCredentials: true,
         });

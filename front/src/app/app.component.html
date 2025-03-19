@@ -1,5 +1,6 @@
 <app-header
     [show]="isAuthPage"
+    [isLogged]="isLogged$ | async"
 ></app-header>
 <main>
   <router-outlet></router-outlet>

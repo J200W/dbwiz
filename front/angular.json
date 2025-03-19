@@ -32,9 +32,15 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "public/css/prism-laserwaves.css",
+              "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.js",
+              "node_modules/prismjs/components/prism-sql.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -72,7 +78,9 @@
           },
           "defaultConfiguration": "development",
           "options": {
-            "allowedHosts": ["www.dbwiz.com"]
+            "allowedHosts": [
+              "www.dbwiz.com"
+            ]
           }
         },
         "extract-i18n": {

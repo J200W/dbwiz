@@ -2,6 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {trigger} from "@angular/animations";
+import {DatabaseService} from "../../services/database.service";
+import {BuildDatabase} from "../../interfaces/build-database.interface";
 
 @Component({
     selector: 'app-build-database',
@@ -57,6 +59,10 @@ export class BuildDatabaseComponent implements OnInit, OnDestroy {
 
     public onLangageChange(event: any): void {
         this.langage.setValue(event.target.value);
-        console.log(this.langage.value)
+    }
+
+    public generate(): void {
+        const buildRequest: BuildDatabase = this.buildForm.value;
+        this.router.navigate(['/database/generate'], {state: buildRequest});
     }
 }

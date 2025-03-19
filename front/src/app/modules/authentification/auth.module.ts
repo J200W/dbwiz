@@ -11,8 +11,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {RegisterComponent} from "./components/register/register.component";
 import {LoginComponent} from "./components/login/login.component";
 import {RouterModule} from "@angular/router";
-import {MatCheckbox, MatCheckboxModule} from "@angular/material/checkbox";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 import {PasswordResetComponent} from "./components/password-reset/password-reset.component";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 const materialModules = [
     MatButtonModule,
@@ -20,7 +21,8 @@ const materialModules = [
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSnackBarModule
 ]
 
 @NgModule({

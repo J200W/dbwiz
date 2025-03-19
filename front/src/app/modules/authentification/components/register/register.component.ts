@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {EmailRegx} from "../../../../core/constants/email-regx";
 import {Subscription} from "rxjs";
 import {RegisterRequest} from "../../interfaces/register-request.interface";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-register',
@@ -21,6 +22,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     constructor(
         private authService: AuthService,
+        private snackBar: MatSnackBar,
         // private sessionService: SessionService,
         private formBuilder: FormBuilder,
         private router: Router
@@ -86,8 +88,27 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 lastname: ''
             };
 
-            this.subscriptions.add(this.authService.register(registerRequest).subscribe(() => {
-                this.router.navigate(['/']);
+            this.subscriptions.add(this.authService.register(registerRequest).subscribe({
+                next: (response)=> {
+                    setTimeout(() => {
+                        this.router.navigate(['/']);
+                    }, 1000)
+                    this.snackBar.open(response.message, '✕', {
+                        duration: 4000,
+                        horizontalPosition: 'center',
+                        verticalPosition: 'top',
+                        panelClass: ['success-snackbar'],
+                    });
+                },
+                error: (error) => {
+                    this.snackBar.open("Erreur: "+error.error.message, '✕', {
+                        duration: 3000,
+                        horizontalPosition: 'center',
+                        verticalPosition: 'top',
+                        panelClass: ['error-snackbar'],
+                    });
+                    console.error(error);
+                }
             }));
         }
     }

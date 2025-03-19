@@ -12,7 +12,6 @@ import {RouterModule} from "@angular/router";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {GenerateDatabaseComponent} from "./components/generate-database/generate-database.component";
 import {BuildDatabaseComponent} from "./components/build-database/build-database.component";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 const materialModules = [
     MatButtonModule,

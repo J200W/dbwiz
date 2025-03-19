@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, booleanAttribute} from '@angular/core';
 import {NgClass, NgIf} from "@angular/common";
 
 @Component({
@@ -12,6 +12,7 @@ import {NgClass, NgIf} from "@angular/common";
 })
 export class HeaderComponent implements OnInit {
     @Input() show: boolean | undefined;
+    @Input({transform: booleanAttribute}) isLogged: boolean | undefined;
     public hasScrolled = false;
 
 

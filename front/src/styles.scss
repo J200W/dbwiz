@@ -1,14 +1,31 @@
+$main-color: #8C52FF;
+$main-color-2: #a476ff;
+$black-color: #3b3b3b;
+$black-gray-color: #3e3e3e;
+$black-pink-color: #45244d;
+$white-color: #F6F6F6;
+$white-gray-color: #e6e6e6;
+$FFF: #FFFFFF;
+$gray-color: #B3B3B3;
+$error-color: #721C24;
+$error-bg-color: #F8D7DA;
+$success-color: #155724;
+$success-bg-color: #D4EDDA;
+
+@use '@angular/material' as mat;
+
 * {
     scroll-behavior: smooth;
 }
 
+
 /* You can add global styles to this file, and also import other style files */
 html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
+h1, h2, h3, h4, h5, h6, p, blockquote,
+a, abbr, acronym, address, big, cite,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
+b, u, i, center, pre, code,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
@@ -79,4 +96,58 @@ select {
     appearance: none;
     padding: 5px 20px;
     box-sizing: border-box;
+}
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+:root {
+    @include mat.snack-bar-overrides((
+            container-shape: 10px,
+    ));
+}
+
+.error-snackbar {
+    color: $error-color;
+    font-family: Arimo, sans-serif;
+
+    .mat-mdc-snackbar-surface {
+        background-color: $error-bg-color !important;
+        --mdc-snackbar-container-color: $error-color !important;
+    }
+
+    .mat-mdc-button {
+        padding-right: 0 !important;
+        padding-left: 24px !important;
+        color: $error-color !important;
+    }
+}
+
+.success-snackbar {
+    color: $success-color;
+    font-family: Arimo, sans-serif;
+
+    .mat-mdc-snackbar-surface {
+        background-color: $success-bg-color !important;
+        --mdc-snackbar-container-color: $success-color !important;
+    }
+
+    .mat-mdc-button {
+        padding-right: 0 !important;
+        padding-left: 24px !important;
+        color: $success-color !important;
+    }
+}
+
+.mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) {
+    --mat-text-button-state-layer-color: none !important;
+}
+
+.code-toolbar .toolbar {
+    font-size: 1em;
+    font-family: Arimo, sans-serif;
+    right: unset !important;
+    left: .5em;
+}
+
+pre[class*=language-] {
+    padding-top: 25px !important;
 }

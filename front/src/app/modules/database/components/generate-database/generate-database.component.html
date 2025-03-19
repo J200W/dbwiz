@@ -1,1 +1,23 @@
-<p>generate-database works!</p>
+<section id="generate-div">
+    <div id="generate-container">
+        <div id="generate-build">
+            <h2>Votre schéma</h2>
+            <div id="code-container">
+<pre class="line-numbers">
+<code [innerHTML]="schema" class="language-sql" id="your-schema"></code>
+</pre>
+            </div>
+            <button (click)="copyToClipboard()" id="copy-btn">Copier</button>
+        </div>
+        <div id="generate-data">
+            <h2>Relation entre entités</h2>
+            <div id="er-diagram">
+                <pre #mermaidContainer *ngIf="mermaidContent != ''" [innerHTML]="mermaidContent" class="mermaid">
+                </pre>
+                <p>
+                    <span *ngIf="mermaidContent == ''">Aucun diagramme à afficher</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

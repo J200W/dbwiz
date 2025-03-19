@@ -5,6 +5,8 @@
 export const environment_test = {
     production: false,
     apiBackendBaseUrl: 'http://localhost:{YOUR-BACKEND-LOCAL-IP}',
+    apiKeyDbWiz: "YOUR-DEEPSEEK-API-KEY",
+    apiKeyChatGpt: "YOUR-CHAT-GPT-API-KEY"
 };
 
 /*

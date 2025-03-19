@@ -1,8 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
 import {EmailRegx} from "../../../../core/constants/email-regx";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {Subscription} from "rxjs";
+
 
 @Component({
     selector: 'app-login',
@@ -10,14 +13,16 @@ import {EmailRegx} from "../../../../core/constants/email-regx";
     styleUrl: './../authentification.common.scss',
     standalone: false
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy {
 
     public loginForm!: FormGroup;
     public visible: boolean = false;
+    private subscriptions = new Subscription();
 
     constructor(
         private authService: AuthService,
         // private sessionService: SessionService,
+        private snackBar: MatSnackBar,
         private formBuilder: FormBuilder,
         private router: Router
 
@@ -27,6 +32,9 @@ export class LoginComponent {
             password: ['', [Validators.required]],
             consent: [false, [Validators.requiredTrue]]
         });
+    }
+
+    ngOnInit() {
     }
 
     public toggleVisible(): void {
@@ -47,15 +55,33 @@ export class LoginComponent {
 
     public login(): void {
         if (this.loginForm.valid) {
-            this.authService.login(this.loginForm.value).subscribe({
+            this.subscriptions.add(this.authService.login(this.loginForm.value).subscribe({
                 next: (response) => {
                     console.log(response);
-                    this.router.navigate(['/']);
+                    setTimeout(() => {
+                        this.router.navigate(['/']);
+                    }, 1000);
+                    this.snackBar.open(response.message, '✕', {
+                        duration: 4000,
+                        horizontalPosition: 'center',
+                        verticalPosition: 'top',
+                        panelClass: ['success-snackbar'],
+                    });
                 },
                 error: (error) => {
+                    this.snackBar.open("Erreur: "+error.error.message, '✕', {
+                        duration: 5000,
+                        horizontalPosition: 'center',
+                        verticalPosition: 'top',
+                        panelClass: ['error-snackbar'],
+                    });
                     console.error(error);
                 }
-            });
+            }));
         }
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.unsubscribe();
     }
 }

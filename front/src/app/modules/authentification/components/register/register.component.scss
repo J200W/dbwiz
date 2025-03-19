@@ -32,16 +32,8 @@ $error-color: #ff224d;
             height: 120px;
         }
 
-        h1 {
-            font-size: 1.5rem;
-            color: $black-color;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
         p {
             margin-block: 20px;
-            padding-inline: 20px;
             font-size: 1rem;
             color: $black-gray-color;
             text-align: center;
@@ -75,12 +67,12 @@ $error-color: #ff224d;
                         color: $gray-color;
                     }
 
-                    .password-toggle {
+                    #password-toggle {
                         cursor: pointer;
                     }
 
                     mat-error {
-                        font-size: 0.75rem;
+                        font-size: 0.8rem;
                         color: $error-color;
                     }
                 }
@@ -95,10 +87,6 @@ $error-color: #ff224d;
                         color: $main-color;
                         text-decoration: none;
                     }
-                }
-
-                #consent-register {
-                    margin-top: 10px;
                 }
 
                 button {
@@ -149,8 +137,6 @@ $error-color: #ff224d;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    box-sizing: border-box;
-                    padding-inline: 0;
 
                     &::before {
                         content: "";
