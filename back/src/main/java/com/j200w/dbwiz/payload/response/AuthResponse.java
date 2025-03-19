@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class AuthResponse {
+    private String message;
     private String fullname;
     private String email;
     private final List<String> roles;

@@ -36,34 +36,23 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        // Essayer de valider le jeton JWT
         try {
-            // Extraire le jeton JWT de l'en-tête de la requête
             String jwt = parseJwt(request);
 
-            // Si le jeton JWT est valide, extraire les informations de l'utilisateur
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+                String username = jwtUtils.getUserNameFromJwtToken(jwt);
 
-                // Extraire le nom d'utilisateur de l'utilisateur
-                String name = jwtUtils.getUserNameFromJwtToken(jwt);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-                // Charger les informations de l'utilisateur à partir de la base de données
-                UserDetails userDetails = userDetailsService.loadUserByUsername(name);
-
-                // Créer une instance de UsernamePasswordAuthenticationToken
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities());
+                        userDetails, null, userDetails.getAuthorities());
 
-                // Mettre à jour les détails de l'authentification
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                // Définir l'authentification dans le contexte de sécurité
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
-            logger.error("Cannot set user authentication: {}", e);
+            throw new RuntimeException(e);
         }
 
         filterChain.doFilter(request, response);
@@ -73,6 +62,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
      * Cette méthode est utilisée pour extraire le jeton JWT des cookies de la requête
      */
     private String parseJwt(HttpServletRequest request) {
-        return jwtUtils.getJwtFromCookies(request);
+        String jwt = jwtUtils.getJwtFromCookies(request);
+        return jwt;
     }
 }

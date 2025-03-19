@@ -1,31 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>🚀 Bienvenue sur DBWiz !</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>🪄 Bienvenue sur DB Wiz !</title>
     <style>
         body {
-            font-family: Helvetica, Arial, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f2f2f2;
+        }
+        table {
             width: 100%;
+            border: 0;
+            margin: 0 auto;
+        }
+        h3 {
+            color: #45244d;
+        }
+        h3 > span {
+            color: #8C52FF;
+        }
+        td {
+            text-align: center
         }
         .container {
             font-size: 16px;
-            width: 70%;
+            width: 90%;
             margin: 50px auto;
             padding: 20px;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
         }
         .header > a > img {
-            height: 100px;
+            width: 100%;
+            max-width: 150px;
+            height: auto;
         }
         .brand {
             font-size: 1.5em;
@@ -34,15 +45,22 @@
             font-weight: 800;
         }
         p {
+            font-size: 1rem;
             margin-bottom: 15px;
         }
+        .message {
+            text-align: left;
+        }
+        .message a {
+            color: #8C52FF;
+            text-decoration: underline;
+        }
         .footer {
-            color: #45244d;
-            font-size: 1rem;
+            color: #B3B3B3;
+            font-size: 0.8rem;
             font-weight: 300;
         }
         hr {
-            width: 65%;
             border: 1px solid #f2f2f2;
             margin-block: 20px;
         }
@@ -50,20 +68,48 @@
 </head>
 <body>
 <div class="container">
-    <div class="header">
-        <a class="brand" href="http://192.168.1.14:4200">
-            <img src="./../assets/dbwiz-logo-long.png">
-        </a>
-    </div>
-    <hr>
-    <h3>Bonjour, <span th:text="${name}"></span>!</h3>
-    <p th:text="${message}"></p>
-    <br><br>
-    <hr>
-    <div class="footer">
-        <p></p>
-        <p>© 2025 J200W. Tous droits réservés.</p>
-    </div>
+    <table cellspacing="0" cellpadding="0">
+        <tr>
+            <td>
+                <div class="header">
+                    <a class="brand" href="http://192.168.1.14:4200">
+                        <img src="https://i.imgur.com/WAcGtOa.png">
+                    </a>
+                </div>
+                <hr>
+                <h3>Bonjour, <span th:text="${name}"></span> !</h3>
+                <div class="message">
+                    <p>
+                        Nous sommes ravis de vous accueillir sur DB Wiz, la plateforme qui simplifie
+                        la création et la gestion de vos bases de données grâce à la puissance de l'IA.
+                        <br><br>
+                    </p>
+                    <p>
+                        <strong>Votre compte est maintenant activé, et vous pouvez commencer à explorer toutes nos fonctionnalités :</strong>
+                    </p>
+                    <a href="http://192.168.1.14:4200/auth/login" class="cta-button">Se connecter à DB Wiz</a>
+                    <p>
+                        <strong>Besoin d'aide pour démarrer ?</strong><br>
+                        Consultez notre <a href="[lien vers le guide]">guide d'utilisation</a> ou contactez notre équipe à <a href="mailto:contact.dbwiz@gmail.com">contact.dbwiz@gmail.com</a>. Nous sommes là pour vous aider !
+                    </p>
+                    <p>
+                        <strong>Restez connecté(e) :</strong><br>
+                        - Suivez-nous sur <a href="[lien Twitter]">Twitter</a> pour des astuces et des mises à jour.<br>
+                        - Rejoignez notre communauté <a href="[lien Discord]">Discord</a> pour échanger avec d'autres utilisateurs.
+                    </p>
+                    <p>
+                        Encore une fois, bienvenue dans la famille DB Wiz ! Nous sommes impatients de voir ce que vous allez créer. 🚀
+                    </p>
+                </div>
+                <br><br>
+                <hr>
+                <div class="footer">
+                    <p></p>
+                    <p>© 2025 J200W. Tous droits réservés.</p>
+                </div>
+            </td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>

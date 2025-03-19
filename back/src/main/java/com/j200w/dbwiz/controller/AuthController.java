@@ -2,6 +2,8 @@ package com.j200w.dbwiz.controller;
 
 import com.j200w.dbwiz.exception.AlreadyInUseException;
 import com.j200w.dbwiz.exception.ResourceNotFoundException;
+import com.j200w.dbwiz.mail.model.Mail;
+import com.j200w.dbwiz.mail.service.MailService;
 import com.j200w.dbwiz.model.ERole;
 import com.j200w.dbwiz.model.Role;
 import com.j200w.dbwiz.model.User;
@@ -19,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -49,6 +52,9 @@ public class AuthController {
 
     @Autowired
     IUserService userService;
+
+    @Autowired
+    MailService mailService;
 
     @Autowired
     PasswordEncoder encoder;
@@ -126,8 +132,16 @@ public class AuthController {
             // Récupérer les détails de l'utilisateur authentifié
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
+            // Envoyer un email de bienvenue
+            Mail mail = new Mail();
+            mail.setMailTo(userDetails.getEmail());
+            mail.setMailSubject("\uD83E\uDE84 Bienvenue sur DBWiz !");
+            mailService.sendEmail(mail, "welcomeTemplate");
+
+
             // Retourner un message de succès
             return new AuthResponse(
+                    "Vous êtes enregistré avec succès !",
                     userDetails.getUsername(),
                     userDetails.getEmail(),
                     roles.stream().map(item -> item.getRole().toString()).collect(Collectors.toList()),
@@ -161,21 +175,28 @@ public class AuthController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtUtils.generateJwtToken(authentication);
 
-            // Créer un cookie HttpOnly contenant le JWT
-            response.addCookie(authService.createCookie(jwtTokenName, jwt, 24 * 60 * 60));
+            ResponseCookie jwtCookie = ResponseCookie.from("jwtToken", jwt)
+                    .path("/")
+                    .maxAge(24 * 60 * 60)
+                    .httpOnly(true)
+                    .secure(false)
+                    .build();
+
+            response.addHeader("Set-Cookie", jwtCookie.toString());
 
             // Récupérer les détails de l'utilisateur authentifié
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
             // Retourner un message de succès
             return new AuthResponse(
+                    "Vous êtes connecté avec succès !",
                     userDetails.getUsername(),
                     userDetails.getEmail(),
                     userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()),
                     HttpStatus.OK.value());
 
         } catch (Exception e) {
-            throw new RuntimeException("Erreur: Erreur rencontrée lors de l'authentification de l'utilisateur --> " + e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -184,8 +205,38 @@ public class AuthController {
      *
      * @return AuthResponse
      */
-    @RequestMapping("/signup")
+    @RequestMapping("/signup-google")
     public AuthResponse signupGoogle() {
         return null;
+    }
+
+    /**
+     * Authentifier un utilisateur avec Google
+     *
+     * @return AuthResponse
+     */
+    @RequestMapping("/login-google")
+    public AuthResponse loginGoogle() {
+        return null;
+    }
+
+    /**
+     * Vérifier si un utilisateur est connecté
+     *
+     * @return AuthResponse
+     */
+    @GetMapping("/is-logged-in")
+    public boolean isLoggedIn(HttpServletResponse response) {
+        try {
+            UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
+                    .getPrincipal();
+            return userDetails != null;
+        } catch (ResourceNotFoundException e) {
+//            response.addCookie(authService.createCookie(jwtTokenName, null, 0));
+            throw new ResourceNotFoundException("Erreur: Utilisateur non connecté !");
+        } catch (Exception e) {
+//            response.addCookie(authService.createCookie(jwtTokenName, null, 0));
+            throw new RuntimeException("Erreur: Erreur rencontrée lors de la vérification de l'utilisateur ! : " + e.getMessage());
+        }
     }
 }
