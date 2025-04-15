@@ -2,9 +2,9 @@ package com.j200w.dbwiz.service;
 
 import com.j200w.dbwiz.security.service.UserDetailsImpl;
 import com.j200w.dbwiz.service.interfaces.IAuthService;
-import jakarta.servlet.http.Cookie;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +16,15 @@ import java.util.stream.Collectors;
 @Data
 public class AuthService implements IAuthService {
     @Override
-    public Cookie createCookie(String name, String value, int maxAge) {
-        Cookie cookie = new Cookie(name, value);
-        cookie.setHttpOnly(true);
-        cookie.setMaxAge(maxAge);
-        cookie.setPath("/");
-        return cookie;
+    public ResponseCookie createCookieHttpOnly(String name, String value, int maxAgeInSeconds) {
+        return ResponseCookie.from(name, value)
+                .httpOnly(true)
+                .sameSite("Lax")
+                .path("/")
+                .maxAge(maxAgeInSeconds)
+                .build();
     }
+
 
     @Override
     public List<String> getRoles(UserDetailsImpl userDetails) {
@@ -32,7 +34,7 @@ public class AuthService implements IAuthService {
     }
 
     @Override
-    public Integer getUserId(UserDetailsImpl userDetails) {
+    public String getUserId(UserDetailsImpl userDetails) {
         return userDetails.getId();
     }
 }

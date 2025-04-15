@@ -1,14 +1,14 @@
-export default function convertSQLToMermaid(sql: string): string {
-    var mermaid: string = "\nerDiagram\n";
+export default function convertSQLToMermaid(sql: any) {
+    var mermaid = "\nerDiagram\n";
     const tables = new Map();
     const foreignKeys = new Map();
     const primaryKeys = new Map();
     let match;
 
     // Les regex pour reconnaître la syntax sql
-    const tableRegex = /CREATE TABLE (\w+) \(([\s\S]+?)\);/g;
-    const foreignKeyRegex = /FOREIGN KEY \((\w+)\) REFERENCES (\w+)\((\w+)\)/g;
-    const referenceRegex = /REFERENCES (\w+)\((\w+)\)/g
+    const tableRegex = /CREATE TABLE (\w+)\s*\(([\s\S]+?)\);/g;
+    const foreignKeyRegex = /FOREIGN KEY \((\w+)\) REFERENCES (\w+)\s*\((\w+)\)/g;
+    const referenceRegex = /REFERENCES (\w+)\s*\((\w+)\)/g
 
     while ((match = tableRegex.exec(sql)) !== null) {
         tables.set(match[1], match[2].split(",\n").map(attr => {
@@ -26,10 +26,10 @@ export default function convertSQLToMermaid(sql: string): string {
 
     // Extraire dans chaque table les clés primaires et les clés étrangères
     tables.forEach((attributes, table) => {
-        let primKeyArr: string[] = []
-        let foreKeyArr: string[] = []
+        let primKeyArr: any[] = []
+        let foreKeyArr: any[] = []
 
-        attributes.forEach((at: string) => {
+        attributes.forEach((at: any) => {
             if (at.startsWith("PRIMARY KEY")) {
                 extractPrimaryKeys(at).forEach(pk => {
                     primKeyArr.push(pk)
@@ -53,7 +53,7 @@ export default function convertSQLToMermaid(sql: string): string {
         foreignKeys.set(table, foreKeyArr);
     });
 
-    tables.forEach((attributes: string[] , table: string) => {
+    tables.forEach((attributes, table) => {
         mermaid += "\n  " + table + " {";
         for (let attr of attributes) {
             let parts = attr.split(" ");
@@ -69,13 +69,13 @@ export default function convertSQLToMermaid(sql: string): string {
                 else if (!attr.includes("PRIMARY KEY")) {
                     mermaid += "\n    " + colName + " " + colType;
 
-                    primaryKeys.get(table).forEach((pk: string) => {
+                    primaryKeys.get(table).forEach((pk: any) => {
                         if (pk.includes(colName)) {
                             mermaid += " PK"
                         }
                     })
 
-                    foreignKeys.get(table).forEach((fk: string) => {
+                    foreignKeys.get(table).forEach((fk: any) => {
                         if (fk.includes(colName)) {
                             if (mermaid.endsWith("PK")) mermaid += ", FK"
                             else mermaid += " FK"
@@ -91,33 +91,21 @@ export default function convertSQLToMermaid(sql: string): string {
 
     // Ajout des relations entre les entités
 
-    /**
-     *   Users ||--o{ Restaurants : "owner_id"
-     *   Users ||--o{ Reviews : "user_id"
-     *   Restaurants ||--o{ Reviews : "restaurant_id"
-     *   Users ||--o{ Favorites : "user_id"
-     *   Restaurants ||--o{ Favorites : "restaurant_id"
-     */
-
     for (let [table, fk] of foreignKeys) {
-        console.log(table, fk)
         while ((match = foreignKeyRegex.exec(fk)) !== null) {
             const fromColumn = match[1];  // Clé étrangère
             const toTable = match[2];     // Table référencée
             const toColumn = match[3];    // Colonne référencée
-            console.log(table, fromColumn, toTable, toColumn, "\n\n");
             mermaid += toTable + " ||--o{ " + table + " : \""+ fromColumn +"\"\n";
         }
     }
-    console.log("tables: ", tables);
-    console.log("primaryKeys: ", primaryKeys);
-    console.log("foreignKeys: ", foreignKeys);
-    console.log("mermaid: ", mermaid);
+
+    if (mermaid.replaceAll("\n", "") == "erDiagram") return "";
     return mermaid;
 }
 
 
-function extractPrimaryKeys(sql: string) {
+function extractPrimaryKeys(sql: any) {
     const primaryKeyRegex = /PRIMARY KEY\s*\(([^)]+)\)/g;
     let match;
     const primaryKeys = [];

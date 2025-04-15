@@ -8,7 +8,7 @@ import {AuthService} from "../../modules/authentification/services/auth.service"
     providedIn: 'root',
 })
 export class SessionService implements OnInit, OnDestroy{
-    public isLoggedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+    private isLoggedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
     public subscriptions: Subscription = new Subscription()
 
     constructor(
@@ -31,19 +31,4 @@ export class SessionService implements OnInit, OnDestroy{
     public $isLogged(): Observable<boolean> {
         return this.isLoggedSubject.asObservable();
     }
-
-    public pingCheckCookie(): void {
-        this.subscriptions.add(this.authService.isLogged().subscribe({
-            next: (response: boolean): void  => {
-                this.isLoggedSubject.next(response)
-            },
-            error: (error: any): void =>  {
-                console.error(error)
-                this.isLoggedSubject.next(false)
-            },
-        }))
-    }
-
-
-
 }

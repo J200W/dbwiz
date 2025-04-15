@@ -28,7 +28,6 @@ export class AppComponent implements OnInit, OnDestroy {
             .pipe(filter(event => event instanceof NavigationEnd))
             .subscribe(() => {
                 this.isAuthPage = this.router.url.includes('/auth');
-                this.sessionService.pingCheckCookie();
                 this.isLogged$ = this.sessionService.$isLogged();
             }));
     }

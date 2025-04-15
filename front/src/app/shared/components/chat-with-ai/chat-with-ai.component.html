@@ -1,0 +1,39 @@
+<div id="chat-container">
+    <div id="chat-header">
+        <h2>DB Wiz AI</h2>
+    </div>
+    <div id="chat-conversation">
+<!--        <div class="sent">-->
+<!--            <div class="chat-img">-->
+<!--                <mat-icon>person</mat-icon>-->
+<!--            </div>-->
+<!--            <p>I want to create an app on which people can create an account and browse all restaurants around the globe-->
+<!--                (see their menu, contact details, some photos, etc.). They can share, put in there favorite list and-->
+<!--                post some comments on the restaurants. All of that using MySQL</p>-->
+<!--        </div>-->
+<!--        <div class="received">-->
+<!--            <div class="chat-img">-->
+<!--                <img alt="DB Wiz logo chat" src="../assets/dbwiz-logo.png"/>-->
+<!--            </div>-->
+<!--            <p>Great, we can add a feature to allow users to add restaurants to a favorites list. We'll need to add a-->
+<!--                new table to store this information. We could also add a feature for users to save their searches. This-->
+<!--                would require another table to save the search terms and restaurants associated with each search. And-->
+<!--                maybe a way for users to share restaurants with their friends? That would need a way to link users and-->
+<!--                restaurants together. Do any of those sound interesting?</p>-->
+<!--        </div>-->
+    </div>
+    <form [formGroup]="chatForm" id="chat-form">
+        <div id="chat-form-header">
+            <p>Améliorez votre base de données</p>
+        </div>
+        <div id="chat-form-input">
+            <mat-form-field appearance="outline" class="example-full-width">
+            <textarea formControlName="message" matInput placeholder="Écrivez votre message..." required
+                      rows="3"></textarea>
+            </mat-form-field>
+            <button (click)="sendMessage()" type="button">
+                <mat-icon>send</mat-icon>
+            </button>
+        </div>
+    </form>
+</div>

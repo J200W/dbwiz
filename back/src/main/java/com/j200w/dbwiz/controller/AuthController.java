@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -83,6 +84,7 @@ public class AuthController {
             }
 
             User user = new User(
+                    UUID.randomUUID().toString(),
                     signUpRequest.getFirstname(),
                     signUpRequest.getLastname(),
                     signUpRequest.getEmail(),
@@ -124,10 +126,15 @@ public class AuthController {
 
             // Mettre l'authentification dans le contexte de sécurité de Spring
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwt = jwtUtils.generateJwtToken(authentication);
 
             // Créer un cookie HttpOnly contenant le JWT
-            response.addCookie(authService.createCookie(jwtTokenName, jwt, 24 * 60 * 60));
+            ResponseCookie jwtCookie = authService.createCookieHttpOnly(
+                    jwtTokenName,
+                    jwtUtils.generateJwtToken(authentication),
+                    24 * 60 * 60);
+
+            // Ajouter le cookie à la réponse
+            response.addHeader("Set-Cookie", jwtCookie.toString());
 
             // Récupérer les détails de l'utilisateur authentifié
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -173,15 +180,14 @@ public class AuthController {
 
             // Mettre l'authentification dans le contexte de sécurité de Spring
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwt = jwtUtils.generateJwtToken(authentication);
 
-            ResponseCookie jwtCookie = ResponseCookie.from("jwtToken", jwt)
-                    .path("/")
-                    .maxAge(24 * 60 * 60)
-                    .httpOnly(true)
-                    .secure(false)
-                    .build();
+            // Créer un cookie HttpOnly contenant le JWT
+            ResponseCookie jwtCookie = authService.createCookieHttpOnly(
+                    jwtTokenName,
+                    jwtUtils.generateJwtToken(authentication),
+                    24 * 60 * 60);
 
+            // Ajouter le cookie à la réponse
             response.addHeader("Set-Cookie", jwtCookie.toString());
 
             // Récupérer les détails de l'utilisateur authentifié
@@ -193,8 +199,8 @@ public class AuthController {
                     userDetails.getUsername(),
                     userDetails.getEmail(),
                     userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()),
-                    HttpStatus.OK.value());
-
+                    HttpStatus.OK.value()
+            );
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -228,14 +234,14 @@ public class AuthController {
     @GetMapping("/is-logged-in")
     public boolean isLoggedIn(HttpServletResponse response) {
         try {
-            UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
+            Object userDetails = SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();
             return userDetails != null;
         } catch (ResourceNotFoundException e) {
-//            response.addCookie(authService.createCookie(jwtTokenName, null, 0));
+            response.setHeader("Set-Cookie", "");
             throw new ResourceNotFoundException("Erreur: Utilisateur non connecté !");
         } catch (Exception e) {
-//            response.addCookie(authService.createCookie(jwtTokenName, null, 0));
+            response.setHeader("Set-Cookie", "");
             throw new RuntimeException("Erreur: Erreur rencontrée lors de la vérification de l'utilisateur ! : " + e.getMessage());
         }
     }

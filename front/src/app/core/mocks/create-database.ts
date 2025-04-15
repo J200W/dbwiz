@@ -1,0 +1,44 @@
+export const createDatabase: string =
+`
+CREATE TABLE Users (
+  id INT PRIMARY KEY,
+  username VARCHAR(50) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Restaurants (
+  id INT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  address VARCHAR(200) NOT NULL,
+  city VARCHAR(50) NOT NULL,
+  country VARCHAR(50) NOT NULL,
+  owner_id INT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (owner_id) REFERENCES Users(id)
+);
+
+CREATE TABLE Reviews (
+  id INT PRIMARY KEY,
+  restaurant_id INT NOT NULL,
+  user_id INT NOT NULL,
+  rating INT NOT NULL,
+  comment TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (restaurant_id) REFERENCES Restaurants(id),
+  FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+CREATE TABLE Favorites (
+  id INT PRIMARY KEY,
+  user_id INT NOT NULL,
+  restaurant_id INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES Users (id),
+  FOREIGN KEY (restaurant_id) REFERENCES Restaurants (id)
+);
+`

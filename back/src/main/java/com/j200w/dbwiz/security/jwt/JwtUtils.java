@@ -51,8 +51,7 @@ public class JwtUtils {
 
     /*
      * Cette méthode est utilisée pour obtenir la clé secrète à partir de la clé
-     * secrète
-     * jwtSecret
+     * secrète jwtSecret
      */
     private Key key() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));

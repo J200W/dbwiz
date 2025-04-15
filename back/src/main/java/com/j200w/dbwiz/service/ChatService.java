@@ -1,14 +1,22 @@
 package com.j200w.dbwiz.service;
 
+import com.j200w.dbwiz.model.ERoleMessage;
+import com.j200w.dbwiz.model.Message;
 import com.j200w.dbwiz.payload.request.BuildRequest;
 import com.j200w.dbwiz.service.interfaces.IChatService;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -17,23 +25,47 @@ public class ChatService implements IChatService {
     @Value("${spring.ai.openai.api-key}")
     private String apiKey;
 
+    private final String endpoint = "https://api.groq.com/openai/v1/chat/completions";
+
     @Override
     public Map<String, String> buildDatabase(BuildRequest buildRequest) {
-        String message =
-                "Tu es développeur web et tu dois construire une base donnée pour un client. Voici les informations que te donne le client :" +
-                buildRequest.getDescription() +
-                ".\nConstruis dans ton message uniquement la base de donnée (sans explication ou mot inutile " +
-                "'Voici la base de...' + interdiction de mettre un retour à la ligne au début de ton résultat) en " +
-                "respectant les contraintes suivantes : "+
-                buildRequest.getConstraint() + ".\n" +
-                "La base de donnée doit être construite en utilisant le langage :" + buildRequest.getLanguage() + ".\n" +
-                "Utilise cette structure pour la base de donnée (CREATE X {XX )";
-        OpenAiApi openAiApi = new OpenAiApi("https://api.groq.com/openai", this.apiKey);
-        OpenAiChatOptions openAiChatOptions = new OpenAiChatOptions();
-        openAiChatOptions.setModel("llama3-70b-8192");
-        openAiChatOptions.setTemperature(0.0);
-        var chatModel = new OpenAiChatModel(openAiApi, openAiChatOptions);
-        String result = chatModel.call(message);
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + apiKey);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Map<String, Object> body = Map.of(
+                "model", "llama3-70b-8192",
+                "messages", List.of(
+                        Map.of("role", "system", "content", "Tu es un expert en base de données."),
+                        Map.of("role", "user", "content", generatePrompt(buildRequest))
+                ),
+                "temperature", 0.0
+        );
+
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
+
+        ResponseEntity<Map> response = restTemplate.postForEntity(endpoint, entity, Map.class);
+        List<Map<String, Object>> choices = (List<Map<String, Object>>) response.getBody().get("choices");
+        String result = (String) ((Map<String, Object>) choices.get(0).get("message")).get("content");
+
         return Map.of("result", result);
+    }
+
+    private String generatePrompt(BuildRequest buildRequest) {
+        return "Voici les informations fournies par le client : " + buildRequest.getDescription() +
+                ". Contraintes : " + buildRequest.getConstraint() +
+                ". Langage à utiliser : " + buildRequest.getLanguage() +
+                ". Structure attendue : CREATE X {XX ... " +
+                "\nDonne uniquement le code, sans commentaire ni explication ni mots inutiles.";
+    }
+
+    @Override
+    public Map<String, String> sendMessage(String message, String threadId) {
+        Message msg = new Message();
+        msg.setRole(ERoleMessage.user);
+        msg.setContent(message);
+        return Map.of("message", msg.getContent());
     }
 }

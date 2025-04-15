@@ -15,8 +15,8 @@ import java.util.Set;
 @AllArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
     @Column(name = "firstname")
     private String firstName;
@@ -43,6 +43,20 @@ public class User {
             String email,
             String password
     ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(
+            String id,
+            String firstName,
+            String lastName,
+            String email,
+            String password
+    ) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

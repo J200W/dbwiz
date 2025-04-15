@@ -15,7 +15,7 @@ public interface IUserService {
      *
      * @param id
      */
-    void delete(Integer id);
+    void delete(String id);
 
     /**
      * Récupérer tous les utilisateurs
@@ -30,7 +30,7 @@ public interface IUserService {
      * @param id
      * @return - User
      */
-    User getById(Integer id);
+    User getById(String id);
 
     /**
      * Mettre à jour un utilisateur
@@ -39,7 +39,7 @@ public interface IUserService {
      * @param user
      * @return - User
      */
-    User update(Integer id, User user);
+    User update(String id, User user);
 
     /**
      * Créer un utilisateur
@@ -63,7 +63,7 @@ public interface IUserService {
      * @param id l'id de l'utilisateur
      * @return boolean
      */
-    boolean existsById(Integer id);
+    boolean existsById(String id);
 
     /**
      * Trouver un utilisateur par son if
@@ -71,7 +71,7 @@ public interface IUserService {
      * @param id
      * @return - Optional<User>
      */
-    Optional<User> findById(Integer id);
+    Optional<User> findById(String id);
 
     /**
      * Vérifier si un utilisateur existe.

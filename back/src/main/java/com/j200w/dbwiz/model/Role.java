@@ -7,12 +7,13 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@Table(name = "role")
+@Table(name="role")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Role {
     @Id
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)

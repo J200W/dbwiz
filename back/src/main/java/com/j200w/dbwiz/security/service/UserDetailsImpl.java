@@ -18,7 +18,7 @@ public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     @Getter
-    private final Integer id;
+    private final String id;
 
     private final String firstname;
 
@@ -46,7 +46,7 @@ public class UserDetailsImpl implements UserDetails {
      * @param authorities
      */
 
-    public UserDetailsImpl(Integer id, String firstname, String lastname, String email, String password,
+    public UserDetailsImpl(String id, String firstname, String lastname, String email, String password,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.firstname = firstname;

@@ -54,10 +54,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     public login(): void {
+        console.log(this.loginForm.value);
         if (this.loginForm.valid) {
             this.subscriptions.add(this.authService.login(this.loginForm.value).subscribe({
                 next: (response) => {
-                    console.log(response);
                     setTimeout(() => {
                         this.router.navigate(['/']);
                     }, 1000);

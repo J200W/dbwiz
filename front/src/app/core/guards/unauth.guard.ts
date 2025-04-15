@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { CanActivate, Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
+import {SessionService} from "../services/session.service";
 
 @Injectable({ providedIn: 'root' })
 /**
@@ -12,7 +13,8 @@ import { map } from 'rxjs/operators';
 export class UnauthGuard implements CanActivate {
 
     constructor(
-        private router: Router
+        private router: Router,
+        private sessionService: SessionService
     ) { }
 
     /**
@@ -20,11 +22,10 @@ export class UnauthGuard implements CanActivate {
      * @returns {Observable<boolean>}
      */
     public canActivate(): Observable<boolean> {
-        return this.router.events.pipe(
-            map(() => {
-                localStorage.setItem('token', '');
-                if (localStorage.getItem('token')) {
-                    this.router.navigate(['/']);
+        return this.sessionService.$isLogged().pipe(
+            map((isLoggedIn: boolean) => {
+                if (isLoggedIn) {
+                    this.router.navigate(['']);
                     return false;
                 }
                 return true;

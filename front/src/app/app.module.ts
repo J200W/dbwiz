@@ -6,19 +6,20 @@ import {CoreModule} from "./core/core.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NotFoundComponent} from "./modules/not-found/not-found.component";
 import {AuthModule} from "./modules/authentification/auth.module";
+import {SharedModule} from "./shared/shared.module";
 
 @NgModule({
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         FormsModule,
-        ReactiveFormsModule,
         CoreModule,
         ReactiveFormsModule,
         AppComponent,
         NotFoundComponent,
         AuthModule,
-    ],
+        SharedModule
+    ]
 })
 /**
  * Module principal

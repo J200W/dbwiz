@@ -18,7 +18,7 @@ public class UserService implements IUserService {
     private final UserRepository userRepository;
 
     @Override
-    public void delete(Integer id) {
+    public void delete(String id) {
         this.userRepository.deleteById(id);
     }
 
@@ -28,12 +28,12 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User getById(Integer id) {
+    public User getById(String id) {
         return this.userRepository.findById(id).orElse(null);
     }
 
     @Override
-    public User update(Integer id, User user) {
+    public User update(String id, User user) {
         user.setId(id);
         return this.userRepository.save(user);
     }
@@ -49,12 +49,12 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean existsById(Integer id) {
+    public boolean existsById(String id) {
         return userRepository.existsById(id);
     }
 
     @Override
-    public Optional<User> findById(Integer id) {
+    public Optional<User> findById(String id) {
         return userRepository.findById(id);
     }
 

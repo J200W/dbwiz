@@ -2,14 +2,15 @@ package com.j200w.dbwiz.service.interfaces;
 
 import com.j200w.dbwiz.security.service.UserDetailsImpl;
 import jakarta.servlet.http.Cookie;
+import org.springframework.http.ResponseCookie;
 
 import java.util.List;
 
 public interface IAuthService {
 
-    Cookie createCookie(String name, String value, int maxAge);
+    ResponseCookie createCookieHttpOnly(String name, String value, int maxAge);
 
     List<String> getRoles(UserDetailsImpl userDetails);
 
-    Integer getUserId(UserDetailsImpl userDetails);
+    String getUserId(UserDetailsImpl userDetails);
 }

@@ -186,6 +186,7 @@ section {
                     img {
                         max-height: 40px;
                         height: auto;
+                        min-width: 40px;
                         margin-bottom: 20px;
                         filter: invert(77%) sepia(61%) saturate(1233%) hue-rotate(359deg) brightness(102%) contrast(94%);
                     }
@@ -193,6 +194,7 @@ section {
                     h3 {
                         color: $white-color;
                         font-size: 1.5rem;
+                        width: 100%;
                         font-weight: 800;
                         margin-bottom: 20px;
                     }

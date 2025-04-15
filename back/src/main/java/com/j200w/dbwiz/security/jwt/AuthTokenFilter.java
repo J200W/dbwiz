@@ -62,7 +62,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
      * Cette méthode est utilisée pour extraire le jeton JWT des cookies de la requête
      */
     private String parseJwt(HttpServletRequest request) {
-        String jwt = jwtUtils.getJwtFromCookies(request);
-        return jwt;
+        return jwtUtils.getJwtFromCookies(request);
     }
 }

@@ -141,13 +141,7 @@ select {
     --mat-text-button-state-layer-color: none !important;
 }
 
-.code-toolbar .toolbar {
-    font-size: 1em;
-    font-family: Arimo, sans-serif;
-    right: unset !important;
-    left: .5em;
+.ace_keyword, .ace_storage.ace_type {
+    text-transform: uppercase;
 }
 
-pre[class*=language-] {
-    padding-top: 25px !important;
-}

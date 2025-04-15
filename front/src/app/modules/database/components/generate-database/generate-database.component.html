@@ -1,22 +1,85 @@
 <section id="generate-div">
     <div id="generate-container">
-        <div id="generate-build">
-            <h2>Votre schéma</h2>
-            <div id="code-container">
-<pre class="line-numbers">
-<code [innerHTML]="schema" class="language-sql" id="your-schema"></code>
-</pre>
-            </div>
-            <button (click)="copyToClipboard()" id="copy-btn">Copier</button>
+        <div id="chat-div">
+            <app-chat-with-ai></app-chat-with-ai>
         </div>
-        <div id="generate-data">
-            <h2>Relation entre entités</h2>
-            <div id="er-diagram">
-                <pre #mermaidContainer *ngIf="mermaidContent != ''" [innerHTML]="mermaidContent" class="mermaid">
-                </pre>
-                <p>
-                    <span *ngIf="mermaidContent == ''">Aucun diagramme à afficher</span>
-                </p>
+        <div id="generate-visuals">
+            <h2>Votre projet</h2>
+            <p>Voici le point de départ pour votre backend. Vous pouvez modifier votre base de donnée à l'aide bloc de
+                code sur la gauche.</p>
+            <div id="generate-tabs">
+                <button (click)="changeTab('code')" class="active" id="code-tab">
+                    <mat-icon>code</mat-icon>
+                    Code
+                </button>
+                <button (click)="changeTab('table')" id="table-tab">
+                    <mat-icon>table_chart</mat-icon>
+                    Tables
+                </button>
+                <button (click)="changeTab('relation')" id="relation-tab">
+                    <mat-icon>storage</mat-icon>
+                    Relations
+                </button>
+            </div>
+            <div [ngClass]="activeTab === 'code' ? 'active-tab' : ''" id="generate-mermaid">
+                <app-code-editor (schemaChange)="updateMermaid($event)"
+                                 [language]="'sql'" [schema]="initSchema">
+                </app-code-editor>
+                <div id="generate-build-buttons">
+                    <button (click)="copyToClipboard()" id="copy-btn">
+                        <mat-icon>
+                            file_copy
+                        </mat-icon>
+                        Copier
+                    </button>
+                    <button (click)="formatSQL()">
+                        <mat-icon>
+                            auto_fix_high
+                        </mat-icon>
+                        Formatter
+                    </button>
+                    <button (click)="formatSQL()">
+                        <mat-icon>
+                            save_alt
+                        </mat-icon>
+                        Exporter
+                    </button>
+                </div>
+            </div>
+            <div [ngClass]="activeTab === 'table' ? 'active-tab' : ''" id="generate-table">
+                <div *ngFor="let table of tableView" class="table-view">
+                    <h3><mat-icon>table_chart</mat-icon>{{ table.tablename }}</h3>
+                    <table>
+                        <tbody>
+                        <tr *ngFor="let att of table.attributes">
+                            <td>{{ att.name }}</td>
+                            <td>{{ att.type }}</td>
+                            <td>{{ att.option }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div [ngClass]="activeTab === 'relation' ? 'active-tab' : ''" id="generate-relation">
+                <div id="er-diagram">
+                    <!-- Message si aucun diagramme -->
+                    @if (!mermaidContent && mermaidIsLoading) {
+                        <p class="er-message">
+                            En cours de chargement
+                        </p>
+                    } @else if (mermaidContent) {
+                        <pre class="mermaid" id="mermaid-graph">
+                                {{ mermaidContent }}
+                            </pre>
+                    } @else {
+                        <p class="er-message">
+                            Aucun diagramme à afficher
+                        </p>
+                    }
+                    <p *ngIf="sqlFormatError" id="er-message">
+                        Erreur de formatage : {{ sqlFormatError }}
+                    </p>
+                </div>
             </div>
         </div>
     </div>

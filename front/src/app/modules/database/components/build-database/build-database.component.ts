@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {trigger} from "@angular/animations";
 import {DatabaseService} from "../../services/database.service";
 import {BuildDatabase} from "../../interfaces/build-database.interface";
 

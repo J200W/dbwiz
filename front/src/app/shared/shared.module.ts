@@ -6,6 +6,9 @@ import {RouterModule} from '@angular/router';
 import {HeaderComponent} from "./header/header.component";
 import {FooterComponent} from "./footer/footer.component";
 import {MaterialModule} from "../core/material.module";
+import {CodeEditorComponent} from "./components/code-editor/code-editor.component";
+import {ReactiveFormsModule} from "@angular/forms";
+import {ChatWithAiComponent} from "./components/chat-with-ai/chat-with-ai.component";
 // import {MaterialModule} from "./material.module";
 // import {CookieService} from "ngx-cookie-service";
 
@@ -15,21 +18,20 @@ import {MaterialModule} from "../core/material.module";
         CommonModule,
         RouterModule,
         MaterialModule,
+        ReactiveFormsModule,
         HeaderComponent,
-        FooterComponent
+        FooterComponent,
+        ChatWithAiComponent
     ],
     providers: [
         provideHttpClient(),
-        // {
-        //     provide: HTTP_INTERCEPTORS, useClass:
-        //     JwtInterceptor, multi: true
-        // },
-        // CookieService
     ],
     exports: [
         MaterialModule,
+        ReactiveFormsModule,
         HeaderComponent,
-        FooterComponent
+        FooterComponent,
+        ChatWithAiComponent
     ]
 })
 /**
