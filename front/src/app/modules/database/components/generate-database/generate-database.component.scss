@@ -173,7 +173,8 @@ $background-color: #f6e9ff;
 
             #generate-table.active-tab {
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+                grid-template-columns: repeat(auto-fit, 32.5%);
+                width: 100%;
             }
 
             ::-webkit-scrollbar-track {
@@ -181,7 +182,7 @@ $background-color: #f6e9ff;
             }
 
             #generate-table {
-                gap: 10px;
+                gap: 5px;
                 overflow: scroll;
                 max-height: 530px;
 
