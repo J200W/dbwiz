@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Table(name="database")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Database {
+public class DatabaseTable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 @Data
-public class DatabaseService implements IDatabaseService {
+public class DatabaseTableService implements IDatabaseTableService {
 
     @Autowired
     private final DatabaseTableRepository databaseTableRepository;

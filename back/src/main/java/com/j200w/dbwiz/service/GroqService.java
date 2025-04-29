@@ -3,11 +3,7 @@ package com.j200w.dbwiz.service;
 import com.j200w.dbwiz.model.ERoleMessage;
 import com.j200w.dbwiz.model.Message;
 import com.j200w.dbwiz.payload.request.BuildRequest;
-import com.j200w.dbwiz.service.interfaces.IChatService;
-import org.springframework.ai.openai.OpenAiChatModel;
-import org.springframework.ai.openai.OpenAiChatOptions;
-import org.springframework.ai.openai.api.OpenAiApi;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.j200w.dbwiz.service.interfaces.IGroqService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -20,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ChatService implements IChatService {
+public class GroqService implements IGroqService {
 
     @Value("${spring.ai.openai.api-key}")
     private String apiKey;

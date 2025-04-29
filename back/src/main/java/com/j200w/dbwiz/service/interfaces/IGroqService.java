@@ -5,7 +5,7 @@ import com.j200w.dbwiz.payload.request.BuildRequest;
 import java.util.Map;
 
 
-public interface IChatService {
+public interface IGroqService {
 
     Map<String, String> buildDatabase(BuildRequest buildRequest);
 
