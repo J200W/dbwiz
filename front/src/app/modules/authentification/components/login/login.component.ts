@@ -5,6 +5,10 @@ import {Router} from "@angular/router";
 import {EmailRegx} from "../../../../core/constants/email-regx";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Subscription} from "rxjs";
+import {SessionService} from "../../../../core/services/session.service";
+import {ResponseApi} from "../../interfaces/response-api.interface";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogComponent} from "../../../../shared/components/dialog/dialog.component";
 
 
 @Component({
@@ -21,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     constructor(
         private authService: AuthService,
-        // private sessionService: SessionService,
+        private sessionService: SessionService,
         private snackBar: MatSnackBar,
         private formBuilder: FormBuilder,
         private router: Router
@@ -54,23 +58,23 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     public login(): void {
-        console.log(this.loginForm.value);
         if (this.loginForm.valid) {
             this.subscriptions.add(this.authService.login(this.loginForm.value).subscribe({
-                next: (response) => {
+                next: (response: ResponseApi) => {
+                    this.sessionService.setLogged(true);
                     setTimeout(() => {
                         this.router.navigate(['/']);
                     }, 1000);
                     this.snackBar.open(response.message, '✕', {
-                        duration: 4000,
+                        duration: 100000,
                         horizontalPosition: 'center',
                         verticalPosition: 'top',
                         panelClass: ['success-snackbar'],
                     });
                 },
-                error: (error) => {
+                error: (error: any) => {
                     this.snackBar.open("Erreur: "+error.error.message, '✕', {
-                        duration: 5000,
+                        duration: 100000,
                         horizontalPosition: 'center',
                         verticalPosition: 'top',
                         panelClass: ['error-snackbar'],

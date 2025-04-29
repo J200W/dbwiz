@@ -1,0 +1,28 @@
+$black-pink-color: #45244DFF;
+
+#loading-screen {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    h1 {
+        font-size: 2.5rem;
+        font-family: "Arimo", sans-serif;
+        color: $black-pink-color;
+    }
+
+    mat-progress-spinner {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 100px;
+    }
+}

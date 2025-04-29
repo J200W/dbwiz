@@ -1,0 +1,76 @@
+<div id="account-header">
+    <div id="account-header-container">
+        <div id="account-header-text">
+            <h1>Mon compte</h1>
+            <p>Bienvenue !</p>
+        </div>
+
+    </div>
+    <div id="account-header-buttons">
+        <button (click)="changeTab('profile')" [ngClass]="{'active': tab === 'profile'}">
+            <h3>Mon profil</h3>
+        </button>
+        <button (click)="changeTab('projects')" [ngClass]="{'active': tab === 'projects'}">
+            <h3>Mes projets</h3>
+        </button>
+        <button id="logout-button" (click)="logout()">
+            <h3>Se déconnecter</h3>
+        </button>
+    </div>
+</div>
+<section id="account-content">
+    @if (tab === 'profile') {
+        <div id="profil" class="account-content-container">
+            <form [formGroup]="meForm">
+                <div class="form-group">
+                    <div class="form-line">
+                        <div class="form-element">
+                            <mat-form-field appearance="outline" class="example-full-width">
+                                <mat-label>Prénom</mat-label>
+                                <input formControlName="firstname" matInput readonly>
+                            </mat-form-field>
+                            <button (click)="updateFirstName()">Changer de prénom</button>
+                        </div>
+                        <div class="form-element">
+                            <mat-form-field appearance="outline" class="example-full-width">
+                                <mat-label>Nom</mat-label>
+                                <input formControlName="lastname" matInput readonly>
+                            </mat-form-field>
+                            <button (click)="updateLastName()">Changer de nom</button>
+                        </div>
+                    </div>
+                    <div class="form-line">
+                        <div class="form-element">
+                            <mat-form-field appearance="outline" class="example-full-width">
+                                <mat-label>Email</mat-label>
+                                <input formControlName="email" matInput type="password" readonly>
+                            </mat-form-field>
+                            <button (click)="updatePassword()">Changer d'adresse email</button>
+                        </div>
+                        <div class="form-element">
+                            <mat-form-field appearance="outline" class="example-full-width">
+                                <mat-label>Mot de passe</mat-label>
+                                <input formControlName="password" matInput type="password" readonly>
+                            </mat-form-field>
+                            <button (click)="updatePassword()">Changer de mot de passe</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    } @else if (tab === 'projects') {
+        <div id="projets" class="account-content-container">
+            <div id="projects-list">
+                <a *ngFor="let project of projects" href="/database/generate/{{ project.id }}" class="project-card">
+                    <div class="project-card-header">
+                        <h3>{{ project.name }}</h3>
+                        <button (click)="deleteProject(project.id, $event)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                    <p>Modifié le : <span>{{ project.date | date: 'dd/MM/yyyy' }}</span></p>
+                </a>
+            </div>
+        </div>
+    }
+</section>

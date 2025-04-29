@@ -1,6 +1,7 @@
 import {Entity} from "./entity-interface";
 
 export default function convertSQLToTableView(sql: any) {
+    sql = sql.replaceAll("`", "");
     var returned_table: Entity[] = [];
     const tables = new Map();
     const foreignKeys = new Map();
@@ -19,12 +20,13 @@ export default function convertSQLToTableView(sql: any) {
                 let colName = parts[0];
                 let colType = parts[1];
                 return colName + " " + colType;
-            }
-            else {
+            } else {
                 return attr.trim()
             }
         }))
     }
+
+    console.log(tables);
 
     // Extraire dans chaque table les clés primaires et les clés étrangères
     tables.forEach((attributes, table) => {
@@ -36,24 +38,24 @@ export default function convertSQLToTableView(sql: any) {
                 extractPrimaryKeys(at).forEach(pk => {
                     primKeyArr.push(pk)
                 })
-            }
-            else if (at.includes("PRIMARY KEY")) {
+            } else if (at.includes("PRIMARY KEY")) {
                 primKeyArr.push(at)
-            }
-            else if (at.includes("FOREIGN KEY")) {
+            } else if (at.includes("FOREIGN KEY")) {
                 foreKeyArr.push(at)
-            }
-            else if (at.includes("REFERENCES")) {
+            } else if (at.includes("REFERENCES")) {
                 const parts = at.split(" ")
                 while ((match = referenceRegex.exec(at)) !== null) {
                     const newRef = `FOREIGN KEY (${parts[0]}) REFERENCES ${match[1]}(${match[2]})`
                     foreKeyArr.push(newRef)
                 }
             }
+
+            console.log(attributes)
         })
         primaryKeys.set(table, primKeyArr);
         foreignKeys.set(table, foreKeyArr);
     });
+
 
     tables.forEach((attributes, table: string) => {
         const newEntity: Entity = {
@@ -66,8 +68,9 @@ export default function convertSQLToTableView(sql: any) {
             let colName = parts[0];
             let colType = parts[1].split("(")[0];
 
+            console.log(attr);
 
-            if (!attr.includes("FOREIGN KEY")) {
+            if (!attr.includes("KEY") && attr != undefined) {
                 // C'est une clé primaire : name_attr type PRIMARY KEY
                 if (attr.includes("PRIMARY KEY") && !attr.startsWith("PRIMARY KEY")) {
                     newEntity.attributes.push({
@@ -110,11 +113,6 @@ export default function convertSQLToTableView(sql: any) {
         returned_table.push(newEntity);
 
     })
-
-    // console.log("tables:", tables);
-    // console.log("primaryKeys:", primaryKeys);
-    // console.log("foreignKeys:", foreignKeys);
-    // console.log("returned_table:", returned_table);
 
     return returned_table;
 }

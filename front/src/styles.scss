@@ -13,6 +13,7 @@ $success-color: #155724;
 $success-bg-color: #D4EDDA;
 
 @use '@angular/material' as mat;
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 * {
     scroll-behavior: smooth;
@@ -105,9 +106,14 @@ select {
     ));
 }
 
+.mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
+    color: unset !important;
+    font-family: unset !important;
+}
+
 .error-snackbar {
-    color: $error-color;
-    font-family: Arimo, sans-serif;
+    color: $error-color !important;
+    font-family: Arimo, sans-serif !important;
 
     .mat-mdc-snackbar-surface {
         background-color: $error-bg-color !important;
@@ -122,8 +128,8 @@ select {
 }
 
 .success-snackbar {
-    color: $success-color;
-    font-family: Arimo, sans-serif;
+    color: $success-color !important;
+    font-family: Arimo, sans-serif !important;
 
     .mat-mdc-snackbar-surface {
         background-color: $success-bg-color !important;
@@ -139,9 +145,14 @@ select {
 
 .mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) {
     --mat-text-button-state-layer-color: none !important;
+    --mdc-theme-primary: $main-color !important;
+    --mdc-snackbar-supporting-text-color: $main-color !important;
 }
 
 .ace_keyword, .ace_storage.ace_type {
     text-transform: uppercase;
 }
 
+.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field .mdc-notched-outline__notch {
+    border-left: none !important;
+}

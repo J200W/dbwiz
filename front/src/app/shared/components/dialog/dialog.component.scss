@@ -1,0 +1,54 @@
+$main-color: #8C52FF;
+$main-color-2: #a476ff;
+$third-color: #ffdd54;
+$black-color: #3b3b3b;
+$black-gray-color: #3e3e3e;
+$black-pink-color: #45244d;
+$white-color: #F6F6F6;
+$white-gray-color: #e6e6e6;
+$FFF: #FFFFFF;
+$gray-color: #B3B3B3;
+$error-color: #ff224d;
+
+mat-dialog-content {
+    padding: 0 36px !important;
+
+    h2 {
+        font-family: "Arimo", sans-serif;
+        font-size: 1.5rem;
+        color: $main-color;
+        padding-inline: 0;
+        padding-block: 10px;
+    }
+
+    p {
+        font-family: "Arimo", sans-serif;
+        color: $black-pink-color;
+    }
+}
+
+mat-dialog-actions {
+    padding: 24px 30px !important;
+
+    button {
+        font-family: "Arimo", sans-serif;
+        transition: all 0.2s;
+        padding: 10px;
+        margin: 0 10px 0 0;
+        border-radius: 10px;
+
+        &:first-child {
+            background-color: $error-color;
+            color: $FFF;
+        }
+        &:last-child {
+            background-color: $main-color;
+            color: $FFF;
+        }
+
+        &:hover {
+            background-color: $main-color-2;
+            color: $FFF;
+        }
+    }
+}

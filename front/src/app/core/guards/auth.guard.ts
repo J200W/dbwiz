@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { CanActivate, Router } from "@angular/router";
-import { Observable } from "rxjs";
+import {catchError, Observable, of} from "rxjs";
 import { map } from 'rxjs/operators';
 import {SessionService} from "../services/session.service";
+import {AuthService} from "../../modules/authentification/services/auth.service";
 
 @Injectable({ providedIn: 'root' })
 /**
@@ -14,7 +15,8 @@ export class AuthGuard implements CanActivate {
 
     constructor(
         private router: Router,
-        private sessionService: SessionService
+        private sessionService: SessionService,
+        private authService: AuthService
     ) { }
 
     /**
@@ -22,14 +24,19 @@ export class AuthGuard implements CanActivate {
      * @returns {Observable<boolean>}
      */
     public canActivate(): Observable<boolean> {
-        return this.sessionService.$isLogged().pipe(
+        return this.authService.isLogged().pipe(
             map((isLoggedIn: boolean) => {
-                console.log("AuthGuard", isLoggedIn);
+                this.sessionService.setLogged(isLoggedIn); // optionnel, pour garder le state synchro
                 if (!isLoggedIn) {
                     this.router.navigate(['/auth/login']);
                     return false;
                 }
                 return true;
+            }),
+            catchError(() => {
+                this.sessionService.setLogged(false);
+                this.router.navigate(['/auth/login']);
+                return of(false);
             })
         );
     }

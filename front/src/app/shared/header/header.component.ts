@@ -1,5 +1,6 @@
-import {Component, OnInit, Input, booleanAttribute} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {NgClass, NgIf} from "@angular/common";
+
 
 @Component({
     selector: 'app-header',
@@ -10,11 +11,10 @@ import {NgClass, NgIf} from "@angular/common";
     ],
     styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnChanges {
     @Input() show: boolean | undefined;
-    @Input({transform: booleanAttribute}) isLogged: boolean | undefined;
+    @Input() isLoggedIn: boolean | undefined;
     public hasScrolled = false;
-
 
     onScroll() {
         this.hasScrolled = window.scrollY > 30;
@@ -25,6 +25,12 @@ export class HeaderComponent implements OnInit {
         window.addEventListener('scroll', this.onScroll.bind(this));
     }
 
-    ngOnInit() {
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['show']) {
+            this.show = changes['show'].currentValue;
+        }
+        if (changes['isLoggedIn']) {
+            this.isLoggedIn = changes['isLoggedIn'].currentValue;
+        }
     }
 }

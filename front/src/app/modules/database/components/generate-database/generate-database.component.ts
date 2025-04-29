@@ -6,7 +6,7 @@ import {
     ElementRef,
     ViewChild,
     ChangeDetectorRef,
-    NgZone
+    NgZone, Input
 } from '@angular/core';
 import {Clipboard} from '@angular/cdk/clipboard';
 import {Router} from "@angular/router";
@@ -19,6 +19,10 @@ import {debounceTime, fromEvent, of, Subscription, switchMap, tap, timer} from "
 import {CodeEditorComponent} from "../../../../shared/components/code-editor/code-editor.component";
 import {Entity} from "../../functions/entity-interface";
 import convertSQLToMermaid from "../../functions/convert-sql-to-mermaid";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ThreadService} from "../../services/thread.service";
+import {Message} from "../../../../core/models/message.interface";
+import {Thread} from "../../../../core/models/thread.interface";
 
 @Component({
     selector: 'app-generate-database',
@@ -29,59 +33,131 @@ import convertSQLToMermaid from "../../functions/convert-sql-to-mermaid";
 export class GenerateDatabaseComponent implements OnInit, OnDestroy, AfterViewInit {
     @ViewChild('mermaidContainer', {static: false}) mermaidContainer!: ElementRef;
     @ViewChild('erDiagramDiv', {static: false}) erDiagramDiv!: ElementRef;
+    @ViewChild('databaseNameInput', {static: false}) databaseNameInput!: ElementRef;
     @ViewChild(CodeEditorComponent) codeEditor!: CodeEditorComponent;
 
-    private buildRequest: BuildDatabase | undefined;
     private schema: string | null = '';
     public initSchema: string | null = '';
     public tableView: Entity[] | null = []
     public mermaidContent: string = "";
     public mermaidIsLoading: boolean = false;
     public subscriptions: Subscription = new Subscription();
-
     public sqlFormatError: string | null = null;
-
     public activeTab: string = 'code';
+    public generateForm!: FormGroup;
+    public messages: Message[] = [];
+    private threadId: string = "";
 
     constructor(
         private router: Router,
         private databaseService: DatabaseService,
+        private threadService: ThreadService,
         private clipboard: Clipboard,
         private cdr: ChangeDetectorRef,
-        private ngZone: NgZone
+        private ngZone: NgZone,
+        private formBuilder: FormBuilder,
     ) {
-        this.buildRequest = this.router.getCurrentNavigation()?.extras.state as BuildDatabase;
+        this.generateForm = this.formBuilder.group({
+            databaseName: ['', Validators.required],
+        });
     }
 
     ngOnInit(): void {
-        this.generateDatabase();
+        this.threadId = this.router.url.split('/')[3];
         mermaid.default.parseError = function (err: any) {
             console.error(err);
         }
+        this.threadService.checkProject(this.threadId).subscribe({
+            next: checkResponse => {
+                if (checkResponse.status === "success") {
+                    this.threadService.getMessages(this.threadId).subscribe({
+                        next: messageResponse => {
+                            this.messages = messageResponse;
+                            this.generateForm.get('databaseName')!.setValue(checkResponse.data.name);
+                        },
+                        error: err => {
+                            console.error(err);
+                        }
+                    })
+                }
+                else {
+                    console.log(checkResponse);
+                }
+            },
+            error: (err: any)=> {
+                console.error(err);
+                this.router.navigate(['/']);
+            }
+        });
     }
 
     ngOnDestroy(): void {
         this.subscriptions.unsubscribe();
     }
 
-    public generateDatabase(): void {
-        this.subscriptions.add(this.databaseService.buildDatabase(this.buildRequest!).subscribe({
-            next: (response: any) => {
-                var formattedSQL = response.result.replace(/```/g, '');
-                this.schema = formattedSQL;
-                this.initSchema = formattedSQL;
-
-                // this.mermaidContent = convertSQLToMermaid(formattedSQL);
-                this.tableView = convertSQLToTableView(formattedSQL)
-                setTimeout(() => {
-                    this.renderMermaid();
-                }, 2000);
-            },
-            error: (error) => {
-                console.error('Error while creating database', error);
-            }
-        }));
+    ngAfterViewInit(): void {
+        this.cdr.detectChanges();
+        this.subscriptions.add(fromEvent(this.databaseNameInput.nativeElement, 'input').pipe(
+            debounceTime(500),
+            tap(() => {
+                const thread = {
+                    id: this.threadId,
+                    name: this.databaseNameInput.nativeElement.value,
+                    date: ""
+                }
+                this.threadService.updateThread(thread).subscribe({
+                    next: (response: any) => {
+                        if (response.status === 'success') {
+                            this.generateForm.get('databaseName')!.setValue(this.databaseNameInput.nativeElement.value);
+                        }
+                    },
+                    error: (err: any) => {
+                        console.error(err);
+                    }
+                })
+            })
+        ).subscribe());
     }
+
+    /*public generateDatabase(): void {
+        this.loading = true;
+        if (this.generateWithAi) {
+            /*this.subscriptions.add(this.databaseService.buildDatabase(this.buildRequest!).subscribe({
+                next: (response: any) => {
+                    var formattedSQL = response.result.replace(/```/g, '');
+                    this.schema = formattedSQL;
+                    this.initSchema = formattedSQL;
+
+                    // this.mermaidContent = convertSQLToMermaid(formattedSQL);
+                    this.tableView = convertSQLToTableView(formattedSQL)
+                    setTimeout(() => {
+                        this.renderMermaid();
+                        this.loading = false;
+                    }, 2000);
+                },
+                error: (error) => {
+                    console.error('Error while creating database', error);
+                    setTimeout(() => {
+                        this.loading = false;
+                    }, 2000);
+                }
+            }));
+            this.subscriptions.add(this.threadService.buildProject().subscribe({
+                next:(response: any) => {
+                    let threadId = response.threadId;
+                    this.subscriptions.add(this.databaseService.generateDatabase(this.buildRequest!, threadId).subscribe({
+
+                    }))
+                },
+                error: (err: any) => {
+
+                }
+            }))
+        }
+        else {
+
+        }
+    }*/
 
     public copyToClipboard(): void {
         const pending = this.clipboard.beginCopy(this.codeEditor.aceGetValue());
@@ -100,11 +176,6 @@ export class GenerateDatabaseComponent implements OnInit, OnDestroy, AfterViewIn
 
     public formatSQL(): void {
         this.codeEditor.formatSQL();
-    }
-
-
-    ngAfterViewInit(): void {
-        this.cdr.detectChanges();
     }
 
     private renderMermaid() {

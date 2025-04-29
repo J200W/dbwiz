@@ -21,12 +21,31 @@ export class DatabaseService {
     constructor(private httpClient: HttpClient) {
     }
 
-    public buildDatabase(buildRequest: BuildDatabase): Observable<any> {
+    /**
+     * @description
+     * Envoie une requête POST pour sauvegarder la base de données
+     * @param {String} schema
+     * @param {String} threadId
+     * @return {Observable<any>}
+     */
+    public saveDatabase(schema: String, threadId: String): Observable<any> {
         return this.httpClient.post<String>(
-            `${this.pathService}/build-database`,
-            buildRequest
+            `${this.pathService}/build-database`+threadId,
+            schema
         );
     }
 
-
+    /**
+     * @description
+     * Envoie une requête POST pour générer la base de données
+     * @param {BuildDatabase} buildRequest
+     * @param {String} threadId
+     * @return {Observable<any>}
+     */
+    public generateDatabase(buildRequest: BuildDatabase, threadId: String): Observable<any> {
+        return this.httpClient.post<String>(
+            `${this.pathService}/build-database`+threadId,
+            buildRequest
+        );
+    }
 }

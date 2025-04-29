@@ -18,8 +18,8 @@ import {SharedModule} from "./shared/shared.module";
         AppComponent,
         NotFoundComponent,
         AuthModule,
-        SharedModule
-    ]
+        SharedModule,
+    ],
 })
 /**
  * Module principal

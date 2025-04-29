@@ -6,6 +6,7 @@ import {EmailRegx} from "../../../../core/constants/email-regx";
 import {Subscription} from "rxjs";
 import {RegisterRequest} from "../../interfaces/register-request.interface";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {SessionService} from "../../../../core/services/session.service";
 
 @Component({
     selector: 'app-register',
@@ -23,7 +24,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     constructor(
         private authService: AuthService,
         private snackBar: MatSnackBar,
-        // private sessionService: SessionService,
+        private sessionService: SessionService,
         private formBuilder: FormBuilder,
         private router: Router
     ) {
@@ -92,7 +93,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 next: (response)=> {
                     setTimeout(() => {
                         this.router.navigate(['/']);
-                    }, 1000)
+                    }, 1000);
+                    this.sessionService.setLogged(true);
                     this.snackBar.open(response.message, '✕', {
                         duration: 4000,
                         horizontalPosition: 'center',

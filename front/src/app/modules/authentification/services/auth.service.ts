@@ -79,8 +79,8 @@ export class AuthService {
      * @memberof AuthService
      * @public
      */
-    public logout(): Observable<void> {
-        return this.httpClient.get<void>(`${this.pathService}/logout`);
+    public logout(): Observable<ResponseApi> {
+        return this.httpClient.get<ResponseApi>(`${this.pathService}/logout`);
     }
 
     /**

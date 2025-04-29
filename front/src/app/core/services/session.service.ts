@@ -7,28 +7,24 @@ import {AuthService} from "../../modules/authentification/services/auth.service"
 @Injectable({
     providedIn: 'root',
 })
-export class SessionService implements OnInit, OnDestroy{
-    private isLoggedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
-    public subscriptions: Subscription = new Subscription()
+export class SessionService {
 
     constructor(
-        private httpClient: HttpClient,
-        private authService: AuthService
-    ) {
+    ) {}
 
-    }
-
-    ngOnInit() {
-    }
-
-    ngOnDestroy() {
+    /**
+     * Met à jour l'état de connexion
+     * @param {boolean} isLogged
+     */
+    public setLogged(isLogged: boolean): void {
+        sessionStorage.setItem('isLogged', isLogged.toString());
     }
 
     /**
-     * Observable de l'état de connexion (qui est un BehaviorSubject à l'initialisation)
-     * @returns {Observable<boolean>}
+     * Vérifie si l'utilisateur est connecté
+     * @returns {boolean}
      */
-    public $isLogged(): Observable<boolean> {
-        return this.isLoggedSubject.asObservable();
+    public isLoggedIn(): boolean {
+        return sessionStorage.getItem('isLogged') === 'true';
     }
 }

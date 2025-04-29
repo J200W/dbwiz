@@ -112,8 +112,7 @@ section {
 
     #what {
         width: 80%;
-        margin: 50px auto;
-        margin-bottom: 100px;
+        margin: 50px auto 100px;
         @media screen and (max-width: 768px) {
             width: 90%;
         }
@@ -131,7 +130,7 @@ section {
             margin-top: 20px;
             line-height: 26px;
             font-size: 1.1rem;
-            text-align: center;
+            text-align: justify;
 
             @media screen and (max-width: 768px) {
                 font-size: 1rem;

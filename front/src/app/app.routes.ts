@@ -5,6 +5,7 @@ import {NotFoundComponent} from "./modules/not-found/not-found.component";
 import {PrivacyPolicyComponent} from "./modules/legal/privacy-policy/privacy-policy.component";
 import {TermsOfUseComponent} from "./modules/legal/terms-of-use/terms-of-use.component";
 import {AuthGuard} from "./core/guards/auth.guard";
+import {MyAccountComponent} from "./modules/my-account/my-account.component";
 
 export const routes: Routes = [
     {
@@ -18,8 +19,14 @@ export const routes: Routes = [
         loadChildren: () => import('./modules/authentification/auth.module').then(m => m.AuthModule)
     },
     {
+        path: 'account',
+        component: MyAccountComponent,
+        canActivate: [AuthGuard],
+        title: 'Mon Compte | DB Wiz 🪄'
+    },
+    {
         path: 'database',
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         loadChildren: () => import('./modules/database/database.module').then(m => m.DatabaseModule)
     },
     {

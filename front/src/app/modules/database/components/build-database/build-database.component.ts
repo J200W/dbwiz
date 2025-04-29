@@ -62,6 +62,6 @@ export class BuildDatabaseComponent implements OnInit, OnDestroy {
 
     public generate(): void {
         const buildRequest: BuildDatabase = this.buildForm.value;
-        this.router.navigate(['/database/generate'], {state: buildRequest});
+        this.router.navigate(['/database/create/ai'], {state: buildRequest});
     }
 }

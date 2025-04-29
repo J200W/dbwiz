@@ -16,7 +16,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/database")
 @Data
-public class ChatController {
+public class ThreadController {
 
     @Autowired
     private IChatService chatService;

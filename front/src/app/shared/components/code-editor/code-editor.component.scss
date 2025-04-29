@@ -1,11 +1,15 @@
 .code-container {
     display: flex;
     flex-direction: row;
-    height: 470px;
+    height: 490px;
     position: relative;
     overflow: hidden;
     min-height: 150px;
     font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+
+    @media screen and (max-width: 1659px) {
+        height: 445px;
+    }
 
     .app-ace-editor {
         width: 100%;

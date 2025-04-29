@@ -1,0 +1,6 @@
+<div id="loading-screen" *ngIf="loading">
+    <h1>
+        {{ loadingMessage || "Chargement..." }}
+    </h1>
+    <mat-progress-spinner [mode]="'indeterminate'" [color]="'#8C52FF'"></mat-progress-spinner>
+</div>

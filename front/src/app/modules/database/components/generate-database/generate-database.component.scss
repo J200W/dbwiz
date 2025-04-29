@@ -15,7 +15,7 @@ $background-color: #f6e9ff;
 #generate-div {
     width: 100%;
     padding-top: 120px;
-    height: 800px;
+    height: 850px;
     background-color: $background-color;
     font-family: "Arimo", sans-serif;
 
@@ -71,10 +71,24 @@ $background-color: #f6e9ff;
             border-radius: 5px;
             background-color: $white-pink-color;
 
-            h2 {
-                font-size: 2em;
-                font-weight: 700;
-                margin-block: 10px;
+            mat-form-field {
+                margin-bottom: 20px;
+                width: 100%;
+
+                .mat-form-field-appearance-outline .mat-form-field-outline {
+                    color: white;
+                }
+
+                input {
+                    padding-left: 10px;
+                    font-size: 1.1rem;
+                    width: max-content;
+                }
+
+                .mat-icon {
+                    color: $black-pink-color;
+                    float: right;
+                }
             }
 
             p {
@@ -177,6 +191,29 @@ $background-color: #f6e9ff;
                 width: 100%;
             }
 
+            #generate-table.empty-table.active-tab {
+                display: block;
+                height: 100%;
+
+                .empty-table-message {
+                    font-size: 1rem;
+                    font-family: Arimo, sans-serif;
+                    color: $error-color;
+                    background-color: $white-color;
+                    font-weight: 700;
+                    border: 1px solid $black-pink-color;
+                    height: 100%;
+                    padding: 20px 30px;
+                    border-radius: 5px;
+                    box-sizing: border-box;
+                    margin: 0;
+
+                    @media screen and (max-width: 1659px) {
+                        height: 92%;
+                    }
+                }
+            }
+
             ::-webkit-scrollbar-track {
                 margin-left: 60px;
             }
@@ -184,9 +221,15 @@ $background-color: #f6e9ff;
             #generate-table {
                 gap: 5px;
                 overflow: scroll;
-                max-height: 530px;
+                max-height: 555px;
+                box-sizing: border-box;
+
+                @media screen and (max-width: 1659px) {
+                    height: 510px;
+                }
 
                 .table-view {
+                    display: block;
                     width: 100%;
                     height: fit-content;
                     box-sizing: border-box;
@@ -266,13 +309,17 @@ $background-color: #f6e9ff;
                 #er-diagram {
                     display: block;
                     width: 100%;
-                    height: 530px;
+                    height: 555px;
                     box-sizing: border-box;
                     padding-left: 30px;
                     overflow: scroll;
                     background-color: $white-color;
                     border-radius: 5px;
                     border: 1px solid #000;
+
+                    @media screen and (max-width: 1650px) {
+                        height: 510px;
+                    }
 
                     pre {
                         height: 90%;
@@ -293,4 +340,23 @@ $background-color: #f6e9ff;
             }
         }
     }
+}
+
+
+:host ::ng-deep .mdc-text-field--outlined {
+    --mdc-outlined-text-field-container-shape: 5px;
+    background-color: $white-color;
+}
+
+
+::ng-deep .mdc-notched-outline__leading {
+    border-color: $black-pink-color !important;
+}
+
+::ng-deep .mdc-notched-outline__notch {
+    border-color: $black-pink-color !important;
+}
+
+::ng-deep .mdc-notched-outline__trailing {
+    border-color: $black-pink-color !important;
 }

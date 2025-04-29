@@ -1,4 +1,5 @@
 export default function convertSQLToMermaid(sql: any) {
+    sql = sql.replaceAll("`", "");
     var mermaid = "\nerDiagram\n";
     const tables = new Map();
     const foreignKeys = new Map();
@@ -30,22 +31,24 @@ export default function convertSQLToMermaid(sql: any) {
         let foreKeyArr: any[] = []
 
         attributes.forEach((at: any) => {
-            if (at.startsWith("PRIMARY KEY")) {
-                extractPrimaryKeys(at).forEach(pk => {
-                    primKeyArr.push(pk)
-                })
-            }
-            else if (at.includes("PRIMARY KEY")) {
-                primKeyArr.push(at)
-            }
-            else if (at.includes("FOREIGN KEY")) {
-                foreKeyArr.push(at)
-            }
-            else if (at.includes("REFERENCES")) {
-                const parts = at.split(" ")
-                while ((match = referenceRegex.exec(at)) !== null) {
-                    const newRef = `FOREIGN KEY (${parts[0]}) REFERENCES ${match[1]}(${match[2]})`
-                    foreKeyArr.push(newRef)
+            if (!at.startsWith("KEY")) {
+                if (at.startsWith("PRIMARY KEY")) {
+                    extractPrimaryKeys(at).forEach(pk => {
+                        primKeyArr.push(pk)
+                    })
+                }
+                else if (at.includes("PRIMARY KEY")) {
+                    primKeyArr.push(at)
+                }
+                else if (at.includes("FOREIGN KEY")) {
+                    foreKeyArr.push(at)
+                }
+                else if (at.includes("REFERENCES")) {
+                    const parts = at.split(" ")
+                    while ((match = referenceRegex.exec(at)) !== null) {
+                        const newRef = `FOREIGN KEY (${parts[0]}) REFERENCES ${match[1]}(${match[2]})`
+                        foreKeyArr.push(newRef)
+                    }
                 }
             }
         })
@@ -60,7 +63,7 @@ export default function convertSQLToMermaid(sql: any) {
             let colName = parts[0];
             let colType = parts[1].split("(")[0];
 
-            if (!attr.includes("FOREIGN KEY")) {
+            if (!attr.includes("KEY")) {
                 // C'est une clé primaire : name_attr type PRIMARY KEY
                 if (attr.includes("PRIMARY KEY") && !attr.startsWith("PRIMARY KEY")) {
                     mermaid += "\n    " + colName + " " + colType + " PK";

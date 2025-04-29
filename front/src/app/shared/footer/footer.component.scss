@@ -1,9 +1,22 @@
+$main-color: #8C52FF;
+$third-color: #ffdd54;
+
 p {
     margin-block: 30px;
     font-size: 1rem;
     font-family: Arimo, sans-serif;
     text-align: center;
     width: 100%;
+
+    a {
+        margin-inline: 10px;
+        color: $main-color;
+        transition: all 0.3s;
+
+        &:hover {
+            color: $third-color;
+        }
+    }
 }
 
 hr {

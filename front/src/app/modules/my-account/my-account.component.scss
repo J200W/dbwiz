@@ -1,0 +1,278 @@
+$main-color: #8C52FF;
+$main-color-2: #a476ff;
+$second-color: #CB6CE6;
+$third-color: #ffdd54;
+$background-tab: #F7DCFFFF;
+$black-color: #3b3b3b;
+$black-gray-color: #3e3e3e;
+$black-pink-color: #45244d;
+$white-color: #F6F6F6;
+$FFF: #FFFFFF;
+$white-pink-color: #fbf1ff;
+$gray-color: #B3B3B3;
+
+#account-header {
+    background-color: #f7dcff;
+    background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #f7dcff 40px), repeating-linear-gradient(#ffffff55, #ffffff);
+    opacity: 1;
+    min-height: 200px;
+    width: 100%;
+    padding-top: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    #account-header-container {
+        width: 60%;
+        min-width: 300px;
+        margin: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+
+        #account-header-text {
+            h1 {
+                font-size: 2.3rem;
+                font-family: Arimo, sans-serif;
+                font-weight: 700;
+                color: #45244d;
+                margin-top: 20px;
+                text-align: left;
+            }
+
+            p {
+                font-size: 1.2rem;
+                font-family: Arimo, sans-serif;
+                font-weight: 400;
+                color: #3e3e3e;
+                margin-top: 20px;
+                text-align: left;
+            }
+        }
+
+        #account-header-logo {
+            max-height: 100%;
+
+            img {
+                height: 100px;
+                width: auto;
+            }
+        }
+    }
+
+    #account-header-buttons {
+        width: 60%;
+        margin: 30px auto 0;
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+
+        button, #logout-button {
+            padding: 10px 20px;
+            background: linear-gradient(113deg, $white-pink-color, $white-color);
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            border: 1px solid $black-pink-color;
+            border-bottom: none;
+            transition: all 0.3s;
+
+            h3 {
+                font-family: "Arimo", sans-serif;
+                color: $black-pink-color;
+                font-size: 1rem;
+            }
+
+            &.active {
+                background: $main-color-2;
+                border: 1px solid $black-pink-color;
+                border-bottom: none;
+
+                h3 {
+                    color: $white-color;
+                }
+            }
+        }
+    }
+}
+
+#account-content {
+    width: 100%;
+    margin-top: 50px;
+
+    .account-content-container {
+        width: 60%;
+        min-height: 60vh;
+        margin: 0 auto;
+
+        form {
+            width: 100%;
+
+            .form-group {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 20px;
+
+                .form-line {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    gap: 20px;
+
+                    .form-element {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        gap: 10px;
+
+                        mat-form-field {
+                            font-family: "Arimo", sans-serif;
+                            width: 100%;
+
+                            mat-label {
+                                font-size: 1rem;
+                                font-weight: 500;
+                                padding-left: 10px;
+                                color: $gray-color;
+                            }
+
+                            input {
+                                padding-left: 10px;
+                                font-size: 1.1rem;
+                                width: max-content;
+                                color: $black-pink-color;
+                            }
+                        }
+
+                        button {
+                            font-family: "Arimo", sans-serif;
+                            font-size: 0.8rem;
+                            font-weight: 700;
+                            color: $main-color;
+                            align-self: flex-end;
+                            transition: all 0.3s;
+
+                            &:hover {
+                                color: $main-color-2;
+                            }
+                        }
+                    }
+                }
+
+                mat-form-field {
+                    width: 100%;
+
+                    .mat-form-field-appearance-outline .mat-form-field-outline {
+                        color: white;
+                    }
+
+                    input {
+                        padding-left: 10px;
+                        font-size: 1.1rem;
+                    }
+                }
+            }
+        }
+    }
+
+    #projects-list {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+
+        .project-card {
+            min-height: 150px;
+            max-height: 200px;
+            width: 100%;
+            padding: 20px;
+            border-radius: 10px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s;
+
+            &:nth-child(2n) {
+                background-color: $main-color;
+            }
+
+            &:nth-child(2n+1) {
+                background-color: $main-color-2;
+            }
+
+            &:hover {
+                transform: scale(1.03);
+            }
+
+            .project-card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+
+                h3 {
+                    font-family: "Arimo", sans-serif;
+                    font-size: 1.2rem;
+                    font-weight: 700;
+                    color: $white-color;
+                    margin-bottom: 10px;
+                }
+
+                button {
+                    background-color: #ff224d;
+                    border: none;
+                    border-radius: 5px;
+                    color: $white-color;
+                    transition: all 0.3s;
+                    padding: 0;
+                    width: 37px;
+                    z-index: 50;
+
+                    mat-icon {
+                        font-size: 2rem;
+                        height: 100%;
+                        width: 100%;
+                        padding: 2px 0 0;
+                    }
+                }
+            }
+
+            p {
+                font-family: "Arimo", sans-serif;
+                font-size: 1rem;
+                font-weight: 500;
+                text-align: right;
+                color: $white-color;
+
+                span {
+
+                }
+            }
+        }
+    }
+}
+
+:host ::ng-deep .mdc-text-field--outlined {
+    --mdc-outlined-text-field-container-shape: 5px;
+}
+
+::ng-deep .mdc-notched-outline__leading {
+    border-color: $black-pink-color !important;
+}
+
+::ng-deep .mdc-notched-outline__notch {
+    border-color: $black-pink-color !important;
+}
+
+::ng-deep .mdc-notched-outline__trailing {
+    border-color: $black-pink-color !important;
+}

@@ -1,11 +1,18 @@
 <section id="generate-div">
     <div id="generate-container">
         <div id="chat-div">
-            <app-chat-with-ai></app-chat-with-ai>
+            <app-chat-with-ai
+                    [messages]="messages"
+            ></app-chat-with-ai>
         </div>
-        <div id="generate-visuals">
-            <h2>Votre projet</h2>
-            <p>Voici le point de départ pour votre backend. Vous pouvez modifier votre base de donnée à l'aide bloc de
+        <form id="generate-visuals" [formGroup]="generateForm">
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Nom de votre projet</mat-label>
+                <input matInput formControlName="databaseName" #databaseNameInput required>
+                <mat-icon>edit</mat-icon>
+            </mat-form-field>
+            <p>Voici le point de départ pour votre backend. Vous pouvez modifier votre base de donnée à l'aide bloc
+                de
                 code sur la gauche.</p>
             <div id="generate-tabs">
                 <button (click)="changeTab('code')" class="active" id="code-tab">
@@ -46,19 +53,32 @@
                     </button>
                 </div>
             </div>
-            <div [ngClass]="activeTab === 'table' ? 'active-tab' : ''" id="generate-table">
-                <div *ngFor="let table of tableView" class="table-view">
-                    <h3><mat-icon>table_chart</mat-icon>{{ table.tablename }}</h3>
-                    <table>
-                        <tbody>
-                        <tr *ngFor="let att of table.attributes">
-                            <td>{{ att.name }}</td>
-                            <td>{{ att.type }}</td>
-                            <td>{{ att.option }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div [ngClass]="{
+                        'empty-table': tableView!.length === 0,
+                        'active-tab': activeTab === 'table'
+                      }" id="generate-table">
+                @if (tableView!.length > 0) {
+
+                    <div *ngFor="let table of tableView" class="table-view">
+                        <h3>
+                            <mat-icon>table_chart</mat-icon>
+                            {{ table.tablename }}
+                        </h3>
+                        <table>
+                            <tbody>
+                            <tr *ngFor="let att of table.attributes">
+                                <td>{{ att.name }}</td>
+                                <td>{{ att.type }}</td>
+                                <td>{{ att.option }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                } @else {
+                    <p class="empty-table-message">
+                        Aucune table à afficher
+                    </p>
+                }
             </div>
             <div [ngClass]="activeTab === 'relation' ? 'active-tab' : ''" id="generate-relation">
                 <div id="er-diagram">
@@ -81,6 +101,6 @@
                     </p>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </section>

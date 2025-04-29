@@ -8,7 +8,11 @@
         <nav>
             <ul>
                 <li><a href="/">Accueil</a></li>
-                <li><a href="/auth/login">Se connecter</a></li>
+                @if (isLoggedIn) {
+                    <li><a href="/account">Mon compte</a></li>
+                } @else if (!isLoggedIn) {
+                    <li><a href="/auth/login">Se connecter</a></li>
+                }
             </ul>
         </nav>
     </div>
