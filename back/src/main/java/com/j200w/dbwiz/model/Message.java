@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Message {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(name="content", nullable = false)
     private String content;
@@ -30,4 +30,11 @@ public class Message {
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="thread_id", nullable=false)
     private Thread thread;
+
+    public Message( String content, ERoleMessage role, User user, Thread thread) {
+        this.content = content;
+        this.role = role;
+        this.user = user;
+        this.thread = thread;
+    }
 }

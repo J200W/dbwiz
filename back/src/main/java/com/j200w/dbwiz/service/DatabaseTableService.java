@@ -2,7 +2,7 @@ package com.j200w.dbwiz.service;
 
 import com.j200w.dbwiz.model.DatabaseTable;
 import com.j200w.dbwiz.repository.DatabaseTableRepository;
-import com.j200w.dbwiz.service.interfaces.IDatabaseService;
+import com.j200w.dbwiz.service.interfaces.IDatabaseTableService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;

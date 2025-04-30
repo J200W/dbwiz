@@ -2,6 +2,7 @@ package com.j200w.dbwiz.service;
 
 import com.j200w.dbwiz.security.service.UserDetailsImpl;
 import com.j200w.dbwiz.service.interfaces.IAuthService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.ResponseCookie;
@@ -19,7 +20,6 @@ public class AuthService implements IAuthService {
     public ResponseCookie createCookieHttpOnly(String name, String value, int maxAgeInSeconds) {
         return ResponseCookie.from(name, value)
                 .httpOnly(true)
-                .sameSite("Lax")
                 .path("/")
                 .maxAge(maxAgeInSeconds)
                 .build();
@@ -36,5 +36,15 @@ public class AuthService implements IAuthService {
     @Override
     public String getUserId(UserDetailsImpl userDetails) {
         return userDetails.getId();
+    }
+
+    @Override
+    public void deleteJwtCookie(HttpServletResponse response, String jwtTokenName) {
+        ResponseCookie cookie = ResponseCookie.from(jwtTokenName, "")
+                .httpOnly(true)
+                .path("/")
+                .maxAge(0)
+                .build();
+        response.addHeader("Set-Cookie", cookie.toString());
     }
 }

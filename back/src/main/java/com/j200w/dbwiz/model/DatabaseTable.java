@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Data
-@Table(name="database")
+@Table(name="database_table")
 @AllArgsConstructor
 @NoArgsConstructor
 public class DatabaseTable {
@@ -30,7 +30,7 @@ public class DatabaseTable {
     @JoinColumn(name="thread_id", nullable=false)
     private Thread thread;
 
-    public Database(LocalDateTime date, String schema, Thread thread) {
+    public DatabaseTable(LocalDateTime date, String schema, Thread thread) {
         this.date = date;
         this.schema = schema;
         this.thread = thread;

@@ -15,6 +15,7 @@ import com.j200w.dbwiz.security.service.UserDetailsImpl;
 import com.j200w.dbwiz.service.interfaces.IAuthService;
 import com.j200w.dbwiz.service.interfaces.IRoleService;
 import com.j200w.dbwiz.service.interfaces.IUserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -171,6 +172,7 @@ public class AuthController {
     @PostMapping("/login")
     public AuthResponse login(
             @Valid @RequestBody LoginRequest loginRequest,
+            HttpServletRequest request,
             HttpServletResponse response
     ) {
         try {
@@ -243,6 +245,29 @@ public class AuthController {
         } catch (Exception e) {
             response.setHeader("Set-Cookie", "");
             throw new RuntimeException("Erreur: Erreur rencontrée lors de la vérification de l'utilisateur ! : " + e.getMessage());
+        }
+    }
+
+    /**
+     * Déconnexion de l'utilisateur
+     *
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     * @return AuthResponse
+     */
+    @GetMapping("/logout")
+    public AuthResponse logout(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String jwt = jwtUtils.getJwtFromCookies(request);
+            boolean validjwt = jwtUtils.validateJwtToken(jwt);
+            if (jwt == null || !validjwt) {
+                response.addHeader("Set-Cookie", "jwtToken=; HttpOnly; SameSite=Strict; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT");
+                return new AuthResponse("Vous n'êtes pas connecté !", null, null, null, HttpStatus.UNAUTHORIZED.value());
+            }
+            authService.deleteJwtCookie(response, jwtTokenName);
+            return new AuthResponse("Vous êtes déconnecté avec succès !", null, null, null, HttpStatus.OK.value());
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 }
