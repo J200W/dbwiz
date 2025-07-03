@@ -28,6 +28,8 @@
 	</scm>
 	<properties>
 		<java.version>23</java.version>
+        <sonar.organization>j200w</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
 	<repositories>
@@ -187,6 +189,7 @@
 			<artifactId>spring-ai-tika-document-reader</artifactId>
 			<version>1.0.0-M4</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
